@@ -8,6 +8,8 @@ import 'package:ido_explorer/screens/widgets/custom_appbar.dart';
 import 'package:ido_explorer/screens/widgets/custom_card.dart';
 import 'package:ido_explorer/screens/widgets/heading_title.dart';
 import 'package:ido_explorer/screens/widgets/ido_datatable.dart';
+import 'package:ido_explorer/screens/widgets/delegations_chart.dart';
+import 'package:ido_explorer/screens/widgets/mining_chart.dart';
 import 'package:ido_explorer/screens/widgets/personal_holding_datatable.dart';
 
 class GlobalScreen extends StatefulWidget {
@@ -95,18 +97,15 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                           ),
                                         ]),
                                     body: TabBarView(
+                                      physics: NeverScrollableScrollPhysics(),
                                       controller: _tabChartController,
                                       children: [
-                                        Center(
-                                          child: Text(
-                                            'Delegations Chart',
-                                            style: TextStyle(color: Colors.white),
-                                          ),
+                                        Column(
+                                          children: <Widget>[
+                                            DelegationsChart(),
+                                          ],
                                         ),
-                                        Center(
-                                          child: Text('Funds Comittted Chart',
-                                              style: TextStyle(color: Colors.white)),
-                                        ),
+                                        MiningChart(),
                                         Center(
                                           child: Text('Mined Chart',
                                               style: TextStyle(color: Colors.white)),
