@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:fluid_layout/fluid_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,8 @@ class GlobalScreen extends StatefulWidget {
 
 class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMixin {
   TabController _tabChartController;
+  int touchedIndex;
+  int touchedIndex2;
 
   List<Global> globalInfo = [];
   bool _loading;
@@ -54,9 +57,7 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
           : Container(
               height: size.height,
               width: size.width,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/ido_background.png"), fit: BoxFit.fill)),
+              decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/ido_background.png"), fit: BoxFit.fill)),
               child: FluidLayout(
                   child: Builder(
                       builder: (context) => CustomScrollView(slivers: <Widget>[
@@ -72,30 +73,26 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                   child: Scaffold(
                                     backgroundColor: Color.fromRGBO(42, 3, 76, 1),
                                     drawerScrimColor: Colors.white,
-                                    appBar: TabBar(
-                                        labelColor: Colors.white,
-                                        indicatorColor: Colors.deepPurple,
-                                        controller: _tabChartController,
-                                        tabs: [
-                                          Tab(
-                                            child: Text(
-                                              'Delegations',
-                                              style: TextStyle(fontWeight: FontWeight.w500),
-                                            ),
-                                          ),
-                                          Tab(
-                                            child: Text(
-                                              'Funds Comitted',
-                                              style: TextStyle(fontWeight: FontWeight.w500),
-                                            ),
-                                          ),
-                                          Tab(
-                                            child: Text(
-                                              'Mined',
-                                              style: TextStyle(fontWeight: FontWeight.w500),
-                                            ),
-                                          ),
-                                        ]),
+                                    appBar: TabBar(labelColor: Colors.white, indicatorColor: Colors.deepPurple, controller: _tabChartController, tabs: [
+                                      Tab(
+                                        child: Text(
+                                          'Delegations',
+                                          style: TextStyle(fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      Tab(
+                                        child: Text(
+                                          'Funds Comitted',
+                                          style: TextStyle(fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      Tab(
+                                        child: Text(
+                                          'Mined',
+                                          style: TextStyle(fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    ]),
                                     body: TabBarView(
                                       physics: NeverScrollableScrollPhysics(),
                                       controller: _tabChartController,
@@ -107,8 +104,7 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                         ),
                                         MiningChart(),
                                         Center(
-                                          child: Text('Mined Chart',
-                                              style: TextStyle(color: Colors.white)),
+                                          child: Text('Mined Chart', style: TextStyle(color: Colors.white)),
                                         )
                                       ],
                                     ),
@@ -133,9 +129,7 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                         children: [
                                           Text(
                                             'Mining & Hashrate Stats',
-                                            style: GoogleFonts.sourceSansPro(
-                                                textStyle:
-                                                    TextStyle(fontSize: 18, color: Colors.black)),
+                                            style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 18, color: Colors.black)),
                                           ),
                                         ],
                                       ),
@@ -175,10 +169,27 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                             Column(
                                               children: [
                                                 Container(
-                                                  color: Colors.red,
                                                   child: SizedBox(
-                                                    height: 100,
-                                                    width: 100,
+                                                    height: 150,
+                                                    width: 150,
+                                                    child: PieChart(
+                                                      PieChartData(
+                                                          pieTouchData: PieTouchData(touchCallback: (pieTouchResponse) {
+                                                            setState(() {
+                                                              if (pieTouchResponse.touchInput is FlLongPressEnd || pieTouchResponse.touchInput is FlPanEnd) {
+                                                                touchedIndex = -1;
+                                                              } else {
+                                                                touchedIndex = pieTouchResponse.touchedSectionIndex;
+                                                              }
+                                                            });
+                                                          }),
+                                                          borderData: FlBorderData(
+                                                            show: false,
+                                                          ),
+                                                          sectionsSpace: 10,
+                                                          centerSpaceRadius: 25,
+                                                          sections: showMiningStats()),
+                                                    ),
                                                   ),
                                                 )
                                               ],
@@ -193,8 +204,7 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                                   SizedBox(
                                                     height: 5,
                                                   ),
-                                                  Text(globalInfo[0].hashrate.toString() +
-                                                      " per year "),
+                                                  Text(globalInfo[0].hashrate.toStringAsFixed(2) + " per year"),
                                                   SizedBox(
                                                     height: 30,
                                                   ),
@@ -202,9 +212,7 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                                   SizedBox(
                                                     height: 5,
                                                   ),
-                                                  Text(
-                                                      (globalInfo[0].hashrate * globalInfo[0].price)
-                                                          .toString()),
+                                                  Text((globalInfo[0].hashrate * globalInfo[0].price).toStringAsFixed(2)),
                                                 ],
                                               ),
                                             ),
@@ -221,9 +229,7 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                         children: [
                                           Text(
                                             'Funds Stats',
-                                            style: GoogleFonts.sourceSansPro(
-                                                textStyle:
-                                                    TextStyle(fontSize: 18, color: Colors.black)),
+                                            style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 18, color: Colors.black)),
                                           ),
                                         ],
                                       ),
@@ -262,11 +268,28 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                             Column(
                                               children: [
                                                 Container(
-                                                    color: Colors.red,
                                                     child: SizedBox(
-                                                      height: 100,
-                                                      width: 100,
-                                                    )),
+                                                  height: 150,
+                                                  width: 150,
+                                                  child: PieChart(
+                                                    PieChartData(
+                                                        pieTouchData: PieTouchData(touchCallback: (pieTouchResponse) {
+                                                          setState(() {
+                                                            if (pieTouchResponse.touchInput is FlLongPressEnd || pieTouchResponse.touchInput is FlPanEnd) {
+                                                              touchedIndex2 = -1;
+                                                            } else {
+                                                              touchedIndex2 = pieTouchResponse.touchedSectionIndex;
+                                                            }
+                                                          });
+                                                        }),
+                                                        borderData: FlBorderData(
+                                                          show: false,
+                                                        ),
+                                                        sectionsSpace: 10,
+                                                        centerSpaceRadius: 25,
+                                                        sections: showingSections()),
+                                                  ),
+                                                )),
                                               ],
                                             ),
                                           ],
@@ -278,11 +301,7 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                     child: CustomCard(
                                         child: Column(children: [
                                       Row(
-                                        children: [
-                                          Text('Total Delegations'),
-                                          Spacer(),
-                                          Text(globalInfo[0].delegatorsCount.toString())
-                                        ],
+                                        children: [Text('Total Delegations'), Spacer(), Text(globalInfo[0].delegatorsCount.toString())],
                                       ),
                                       Divider(
                                         color: Colors.black,
@@ -331,9 +350,7 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children: [
                                         Container(
-                                          child: SingleChildScrollView(
-                                              scrollDirection: Axis.vertical,
-                                              child: IdoDataTable()),
+                                          child: SingleChildScrollView(scrollDirection: Axis.vertical, child: IdoDataTable()),
                                         )
                                       ],
                                     ),
@@ -364,18 +381,76 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
         children: [
           Text(
             leadingtext,
-            style: GoogleFonts.sourceSansPro(
-                textStyle: TextStyle(fontSize: 15, color: Colors.grey[500])),
+            style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 15, color: Colors.grey[500])),
           ),
           Spacer(),
           Text(
             endingText,
-            style: GoogleFonts.sourceSansPro(
-                textStyle:
-                    TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600)),
+            style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600)),
           )
         ],
       ),
     );
+  }
+
+  List<PieChartSectionData> showingSections() {
+    return List.generate(2, (i) {
+      final isTouched = i == touchedIndex2;
+      final double fontSize = isTouched ? 25 : 16;
+      final double radius = isTouched ? 60 : 50;
+
+      switch (i) {
+        case 0:
+          return PieChartSectionData(
+            color: const Color(0xff0293ee),
+            value: 40,
+            title: '40%',
+            radius: radius,
+            titleStyle: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, color: const Color(0xffffffff)),
+          );
+        case 1:
+          return PieChartSectionData(
+            color: const Color(0xfff8b250),
+            value: 30,
+            title: '30%',
+            radius: radius,
+            titleStyle: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, color: const Color(0xffffffff)),
+          );
+
+        default:
+          return null;
+      }
+    });
+  }
+
+  List<PieChartSectionData> showMiningStats() {
+    return List.generate(2, (i) {
+      final isTouched = i == touchedIndex;
+      final double fontSize = isTouched ? 25 : 16;
+      final double radius = isTouched ? 60 : 50;
+
+      switch (i) {
+        case 0:
+          return PieChartSectionData(
+            color: const Color(0xff0293ee),
+            //globalInfo[0].minedTotal == 0 ? 100 :  ((10000/globalInfo[0].mintingSupply)*100).toDouble()
+            value: globalInfo[0].minedTotal == 0 || globalInfo[0].minedTotal == null ? 0 : ((globalInfo[0].minedTotal / globalInfo[0].mintingSupply) * 100).toStringAsFixed(0),
+            title: globalInfo[0].minedTotal == 0 || globalInfo[0].minedTotal == null ? '0%' : ((globalInfo[0].minedTotal / globalInfo[0].mintingSupply) * 100).toStringAsFixed(0) + '%',
+            radius: radius,
+            titleStyle: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, color: Colors.black),
+          );
+        case 1:
+          return PieChartSectionData(
+            color: const Color(0xfff8b250),
+            value: globalInfo[0].minedTotal == 0 || globalInfo[0].minedTotal == null ? 100 : ((100 - (globalInfo[0].minedTotal / globalInfo[0].mintingSupply) * 100)).toStringAsFixed(0),
+            title: globalInfo[0].minedTotal == 0 || globalInfo[0].minedTotal == null ? '100%' : ((100 - (14989622900000 / globalInfo[0].mintingSupply) * 100)).toStringAsFixed(0) + '%',
+            radius: radius,
+            titleStyle: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, color: const Color(0xffffffff)),
+          );
+
+        default:
+          return null;
+      }
+    });
   }
 }

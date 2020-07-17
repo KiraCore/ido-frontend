@@ -81,12 +81,10 @@ class _DelegationsChartState extends State<DelegationsChart> {
         bottomTitles: SideTitles(
           showTitles: true,
           reservedSize: 22,
-          textStyle:
-              const TextStyle(color: Color(0xff68737d), fontWeight: FontWeight.bold, fontSize: 16),
+          textStyle: const TextStyle(color: Color(0xff68737d), fontWeight: FontWeight.bold, fontSize: 16),
           getTitles: (value) {
             //var _r = DateTime.fromMillisecondsSinceEpoch(value.toInt() * 1000).toString();
-            
-            
+
             /*
             switch (value.toInt()) {
               case 2:
@@ -141,8 +139,7 @@ class _DelegationsChartState extends State<DelegationsChart> {
           margin: 0,
         ),
       ),
-      borderData:
-          FlBorderData(show: true, border: Border.all(color: const Color(0xff37434d), width: 1)),
+      borderData: FlBorderData(show: true, border: Border.all(color: const Color(0xff37434d), width: 1)),
       minX: delegationsList[0].timestamp,
       maxX: delegationsList.last.timestamp,
       minY: 0,

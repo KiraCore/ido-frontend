@@ -51,9 +51,7 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
           : Container(
               height: size.height,
               width: size.width,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/ido_background.png"), fit: BoxFit.fill)),
+              decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/ido_background.png"), fit: BoxFit.fill)),
               child: FluidLayout(
                   child: Builder(
                       builder: (context) => CustomScrollView(slivers: <Widget>[
@@ -70,12 +68,7 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          Flexible(
-                                              child: Text('Total mined : ' +
-                                                  delegatorInfo[0].minedTotal.toString() +
-                                                  '(' +
-                                                  'MINED VALUE * PRICE' +
-                                                  ')')),
+                                          Flexible(child: Text('Total mined : ' + delegatorInfo[0].minedTotal.toString() + '(' + 'MINED VALUE * PRICE' + ')')),
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                             children: [
@@ -84,13 +77,11 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
                                                 children: [
                                                   Text(
                                                     delegatorInfo[0].tickerBase,
-                                                    style: TextStyle(
-                                                        fontSize: 18, color: Colors.black),
+                                                    style: TextStyle(fontSize: 18, color: Colors.black),
                                                   ),
                                                   Text(
                                                     delegatorInfo[0].priceBase.toString(),
-                                                    style: TextStyle(
-                                                        fontSize: 18, color: Colors.black),
+                                                    style: TextStyle(fontSize: 18, color: Colors.black),
                                                   ),
                                                 ],
                                               ),
@@ -103,16 +94,11 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
                                                 children: [
                                                   Text(
                                                     delegatorInfo[0].tickerQuote,
-                                                    style: TextStyle(
-                                                        fontSize: 18, color: Colors.black),
+                                                    style: TextStyle(fontSize: 18, color: Colors.black),
                                                   ),
                                                   Text(
-                                                    delegatorInfo[0]
-                                                        .priceQuote
-                                                        .toStringAsFixed(2)
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        fontSize: 18, color: Colors.black),
+                                                    delegatorInfo[0].priceQuote.toStringAsFixed(2).toString(),
+                                                    style: TextStyle(fontSize: 18, color: Colors.black),
                                                   ),
                                                 ],
                                               ),
@@ -121,11 +107,7 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
                                           Flexible(
                                               child: Padding(
                                             padding: const EdgeInsets.only(left: 20),
-                                            child: Text('Hashrate:' +
-                                                delegatorInfo[0].hashrate.toString() +
-                                                ' (' +
-                                                'HASH VALUE * PRICE' +
-                                                ')'),
+                                            child: Text('Hashrate:' + delegatorInfo[0].hashrate.toString() + ' (' + 'HASH VALUE * PRICE' + ')'),
                                           )),
                                         ],
                                       )
@@ -136,30 +118,26 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
                                   child: Scaffold(
                                     backgroundColor: Color.fromRGBO(42, 3, 76, 1),
                                     drawerScrimColor: Colors.white,
-                                    appBar: TabBar(
-                                        labelColor: Colors.white,
-                                        indicatorColor: Colors.deepPurple,
-                                        controller: _tabChartController,
-                                        tabs: [
-                                          Tab(
-                                            child: Text(
-                                              'Delegations',
-                                              style: TextStyle(fontWeight: FontWeight.w500),
-                                            ),
-                                          ),
-                                          Tab(
-                                            child: Text(
-                                              'Funds Comitted',
-                                              style: TextStyle(fontWeight: FontWeight.w500),
-                                            ),
-                                          ),
-                                          Tab(
-                                            child: Text(
-                                              'Mined',
-                                              style: TextStyle(fontWeight: FontWeight.w500),
-                                            ),
-                                          ),
-                                        ]),
+                                    appBar: TabBar(labelColor: Colors.white, indicatorColor: Colors.deepPurple, controller: _tabChartController, tabs: [
+                                      Tab(
+                                        child: Text(
+                                          'Delegations',
+                                          style: TextStyle(fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      Tab(
+                                        child: Text(
+                                          'Funds Comitted',
+                                          style: TextStyle(fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      Tab(
+                                        child: Text(
+                                          'Mined',
+                                          style: TextStyle(fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    ]),
                                     body: TabBarView(
                                       controller: _tabChartController,
                                       children: [
@@ -170,12 +148,10 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
                                           ),
                                         ),
                                         Center(
-                                          child: Text('Funds Comittted Chart',
-                                              style: TextStyle(color: Colors.white)),
+                                          child: Text('Funds Comittted Chart', style: TextStyle(color: Colors.white)),
                                         ),
                                         Center(
-                                          child: Text('Mined Chart',
-                                              style: TextStyle(color: Colors.white)),
+                                          child: Text('Mined Chart', style: TextStyle(color: Colors.white)),
                                         )
                                       ],
                                     ),
@@ -209,21 +185,14 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
                                         children: [
                                           Text('Total Value of Delegations :'),
                                           Spacer(),
-                                          Text(delegatorInfo[0].delegations.toString() +
-                                              ' (' +
-                                              delegatorInfo[0].delegationsValue.toString() +
-                                              ')'),
+                                          Text(delegatorInfo[0].delegations.toString() + ' (' + delegatorInfo[0].delegationsValue.toString() + ')'),
                                         ],
                                       ),
                                       Row(
                                         children: [
-                                          Text('Undelegations:',
-                                              style:
-                                                  TextStyle(fontSize: 13, color: Colors.grey[500])),
+                                          Text('Undelegations:', style: TextStyle(fontSize: 13, color: Colors.grey[500])),
                                           Spacer(),
-                                          Text(delegatorInfo[0].undelegations.toString(),
-                                              style:
-                                                  TextStyle(fontSize: 13, color: Colors.grey[500]))
+                                          Text(delegatorInfo[0].undelegations.toString(), style: TextStyle(fontSize: 13, color: Colors.grey[500]))
                                         ],
                                       ),
                                       SizedBox(
@@ -235,20 +204,14 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
                                           SizedBox(
                                             width: 10,
                                           ),
-                                          Expanded(
-                                              child: Text(
-                                                  delegatorInfo[0].validatorAddress.toString()))
+                                          Expanded(child: Text(delegatorInfo[0].validatorAddress.toString()))
                                         ],
                                       ),
                                       SizedBox(
                                         height: 10,
                                       ),
                                       Row(
-                                        children: [
-                                          Text('Network:'),
-                                          Spacer(),
-                                          Text(delegatorInfo[0].network.toString())
-                                        ],
+                                        children: [Text('Network:'), Spacer(), Text(delegatorInfo[0].network.toString())],
                                       ),
                                     ]))),
                                 FluidCell.withFixedHeight(
@@ -257,22 +220,18 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
                                   child: Scaffold(
                                     backgroundColor: Colors.white,
                                     drawerScrimColor: Colors.white,
-                                    appBar: TabBar(
-                                        controller: _tabValidatorController,
-                                        indicatorColor: Colors.deepPurple,
-                                        tabs: [
-                                          Tab(
-                                            child: Text('All Validators'),
-                                          ),
-                                          Tab(
-                                            child: Text('Delegated Validators'),
-                                          ),
-                                        ]),
+                                    appBar: TabBar(controller: _tabValidatorController, indicatorColor: Colors.deepPurple, tabs: [
+                                      Tab(
+                                        child: Text('All Validators'),
+                                      ),
+                                      Tab(
+                                        child: Text('Delegated Validators'),
+                                      ),
+                                    ]),
                                     body: TabBarView(
                                       controller: _tabValidatorController,
                                       children: [
-                                        SingleChildScrollView(
-                                            scrollDirection: Axis.vertical, child: IdoDataTable()),
+                                        SingleChildScrollView(scrollDirection: Axis.vertical, child: IdoDataTable()),
                                         Center(child: Text('Delegated Validators Table')),
                                       ],
                                     ),
