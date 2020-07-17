@@ -42,27 +42,23 @@ class _MiningChartState extends State<MiningChart> {
   Widget build(BuildContext context) {
     return _loading
         ? Center(child: CircularProgressIndicator())
-        : Stack(
-            children: <Widget>[
-              SizedBox(
-                width: 500,
-                height: 200,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0, right: 10.0),
-                  child: LineChart(
-                    mainData(),
-                  ),
+        : Expanded(
+            flex: 1,
+            child: Container(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: LineChart(
+                  mainData(),
                 ),
               ),
-            ],
-          );
+            ));
   }
 
   LineChartData mainData() {
     return LineChartData(
       gridData: FlGridData(
-        show: true,
-        drawVerticalLine: true,
+        show: false,
+        drawVerticalLine: false,
         getDrawingHorizontalLine: (value) {
           return FlLine(
             color: const Color(0xff37434d),
@@ -77,10 +73,10 @@ class _MiningChartState extends State<MiningChart> {
         },
       ),
       titlesData: FlTitlesData(
-        show: true,
+        show: false,
         bottomTitles: SideTitles(
-          showTitles: true,
-          reservedSize: 22,
+          showTitles: false,
+          reservedSize: 0, //22
           textStyle:
               const TextStyle(color: Color(0xff68737d), fontWeight: FontWeight.bold, fontSize: 16),
           getTitles: (value) {
@@ -98,10 +94,10 @@ class _MiningChartState extends State<MiningChart> {
             */
             return '';
           },
-          margin: 8,
+          margin: 0,//8
         ),
         leftTitles: SideTitles(
-          showTitles: true,
+          showTitles: false,
           textStyle: const TextStyle(
             color: Color(0xff67727d),
             fontSize: 15,
@@ -140,11 +136,11 @@ class _MiningChartState extends State<MiningChart> {
         ),
       ),
       borderData:
-          FlBorderData(show: true, border: Border.all(color: const Color(0xff37434d), width: 1)),
+          FlBorderData(show: false, border: Border.all(color: const Color(0xff37434d), width: 1)),
       minX: miningList[0].timestamp,
       maxX: miningList.last.timestamp,
       minY: 0,
-      maxY: (miningList.last.hash * 2),
+      maxY: (miningList.last.hash * 1),
       lineBarsData: measurementsData(miningList),
     );
   }

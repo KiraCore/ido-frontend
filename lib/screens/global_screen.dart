@@ -57,7 +57,7 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
           : Container(
               height: size.height,
               width: size.width,
-              decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/ido_background.png"), fit: BoxFit.fill)),
+              //decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/ido_background.png"), fit: BoxFit.fill)),
               child: FluidLayout(
                   child: Builder(
                       builder: (context) => CustomScrollView(slivers: <Widget>[
@@ -71,9 +71,8 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                   size: context.fluid(12, xs: 12, s: 12, m: 12, l: 6, xl: 6),
                                   height: 250,
                                   child: Scaffold(
-                                    backgroundColor: Color.fromRGBO(42, 3, 76, 1),
                                     drawerScrimColor: Colors.white,
-                                    appBar: TabBar(labelColor: Colors.white, indicatorColor: Colors.deepPurple, controller: _tabChartController, tabs: [
+                                    appBar: TabBar(labelColor: Colors.black, indicatorColor: Colors.deepPurple, controller: _tabChartController, tabs: [
                                       Tab(
                                         child: Text(
                                           'Delegations',
@@ -97,10 +96,11 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                       physics: NeverScrollableScrollPhysics(),
                                       controller: _tabChartController,
                                       children: [
-                                        Column(
-                                          children: <Widget>[
-                                            DelegationsChart(),
-                                          ],
+                                        Container(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                                            children: <Widget>[DelegationsChart()],
+                                          ),
                                         ),
                                         MiningChart(),
                                         Center(
@@ -287,7 +287,7 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                                         ),
                                                         sectionsSpace: 10,
                                                         centerSpaceRadius: 25,
-                                                        sections: showingSections()),
+                                                        sections: showingFundingStats()),
                                                   ),
                                                 )),
                                               ],
@@ -393,7 +393,7 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
     );
   }
 
-  List<PieChartSectionData> showingSections() {
+  List<PieChartSectionData> showingFundingStats() {
     return List.generate(2, (i) {
       final isTouched = i == touchedIndex2;
       final double fontSize = isTouched ? 25 : 16;
@@ -402,19 +402,19 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
       switch (i) {
         case 0:
           return PieChartSectionData(
-            color: const Color(0xff0293ee),
-            value: 40,
-            title: '40%',
+            color: Colors.deepPurple,
+            value: 60,
+            title: '60%',
             radius: radius,
-            titleStyle: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, color: const Color(0xffffffff)),
+            titleStyle: TextStyle(fontSize: fontSize, color: const Color(0xffffffff)),
           );
         case 1:
           return PieChartSectionData(
-            color: const Color(0xfff8b250),
-            value: 30,
-            title: '30%',
+            color: Colors.grey[100],
+            value: 40,
+            title: '40%',
             radius: radius,
-            titleStyle: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, color: const Color(0xffffffff)),
+            titleStyle: TextStyle(fontSize: fontSize, color: Colors.black),
           );
 
         default:
@@ -432,20 +432,20 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
       switch (i) {
         case 0:
           return PieChartSectionData(
-            color: const Color(0xff0293ee),
+            color: Colors.deepPurple,
             //globalInfo[0].minedTotal == 0 ? 100 :  ((10000/globalInfo[0].mintingSupply)*100).toDouble()
             value: globalInfo[0].minedTotal == 0 || globalInfo[0].minedTotal == null ? 0 : ((globalInfo[0].minedTotal / globalInfo[0].mintingSupply) * 100).toStringAsFixed(0),
             title: globalInfo[0].minedTotal == 0 || globalInfo[0].minedTotal == null ? '0%' : ((globalInfo[0].minedTotal / globalInfo[0].mintingSupply) * 100).toStringAsFixed(0) + '%',
             radius: radius,
-            titleStyle: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, color: Colors.black),
+            titleStyle: TextStyle(fontSize: fontSize, color: const Color(0xffffffff)),
           );
         case 1:
           return PieChartSectionData(
-            color: const Color(0xfff8b250),
+            color: Colors.grey[100],
             value: globalInfo[0].minedTotal == 0 || globalInfo[0].minedTotal == null ? 100 : ((100 - (globalInfo[0].minedTotal / globalInfo[0].mintingSupply) * 100)).toStringAsFixed(0),
             title: globalInfo[0].minedTotal == 0 || globalInfo[0].minedTotal == null ? '100%' : ((100 - (14989622900000 / globalInfo[0].mintingSupply) * 100)).toStringAsFixed(0) + '%',
             radius: radius,
-            titleStyle: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, color: const Color(0xffffffff)),
+            titleStyle: TextStyle(fontSize: fontSize, color: Colors.black),
           );
 
         default:
