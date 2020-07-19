@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:html' as html;
 
 class ModalTrigger extends StatelessWidget {
   _showModalBottomSheet(context) {
@@ -24,7 +25,7 @@ class ModalTrigger extends StatelessWidget {
                       child: Column(
                         children: [
                           Flexible(
-                                                      child: Row(
+                            child: Row(
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.all(20.0),
@@ -44,7 +45,9 @@ class ModalTrigger extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      onPressed: () => _showModalBottomSheet(context),
+      onPressed: () => html.window.open('https://medium.com/kira-core/initial-delegator-offering-ido-b788c83c32d5', 'Kira IDO Explainer'),
+
+      //_showModalBottomSheet(context),
       child: Text('What is an IDO?'),
     );
   }

@@ -19,6 +19,7 @@ class GlobalScreen extends StatefulWidget {
 }
 
 class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMixin {
+  TextEditingController searchController = new TextEditingController();
   TabController _tabChartController;
   int touchedIndex;
   int touchedIndex2;
@@ -61,7 +62,7 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
               child: FluidLayout(
                   child: Builder(
                       builder: (context) => CustomScrollView(slivers: <Widget>[
-                            makeAppBar(context),
+                            makeAppBar(context, searchController),
                             SliverToBoxAdapter(child: HeadingTitle()),
                             SliverFluidGrid(
                               fluid: true,
@@ -102,7 +103,12 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                             children: <Widget>[DelegationsChart()],
                                           ),
                                         ),
-                                        MiningChart(),
+                                        Container(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                                            children: <Widget>[MiningChart()],
+                                          ),
+                                        ),
                                         Center(
                                           child: Text('Mined Chart', style: TextStyle(color: Colors.white)),
                                         )
@@ -121,7 +127,7 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                   ),
                                 ),
                                 FluidCell.withFixedHeight(
-                                    size: context.fluid(5, xs: 12, s: 12, m: 7),
+                                    size: context.fluid(6, xs: 12, s: 12, m: 7),
                                     height: 280,
                                     child: CustomCard(
                                         child: Column(children: [
@@ -297,48 +303,46 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                       )
                                     ]))),
                                 FluidCell.fit(
-                                    size: context.fluid(3, xs: 12, s: 12, m: 12),
+                                    size: context.fluid(2, xs: 12, s: 12, m: 12),
                                     child: CustomCard(
                                         child: Column(children: [
-                                      Row(
-                                        children: [Text('Total Delegations'), Spacer(), Text(globalInfo[0].delegatorsCount.toString())],
+                                      Text('Total Delegations'),
+                                      Divider(
+                                        color: Colors.black,
+                                        height: 5,
+                                        thickness: 0.1,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(bottom: 10),
+                                        child: Text(globalInfo[0].delegatorsCount.toString()),
+                                      ),
+                                      Text('Total Validators'),
+                                      Divider(
+                                        color: Colors.black,
+                                        height: 5,
+                                        thickness: 0.1,
+                                      ),
+                                      Text(globalInfo[0].validatorsCount.toString()),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 10.0),
+                                        child: Text('IDO Start Date'),
                                       ),
                                       Divider(
                                         color: Colors.black,
                                         height: 5,
                                         thickness: 0.1,
                                       ),
-                                      Row(
-                                        children: [
-                                          Text('Total Validators'),
-                                          Spacer(),
-                                          Text(globalInfo[0].validatorsCount.toString()),
-                                        ],
+                                      Text(DateTime.fromMicrosecondsSinceEpoch(int.parse(globalInfo[0].start.toString()) * 1000).toString().substring(0, 10)),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 10.0),
+                                        child: Text('IDO End Date'),
                                       ),
                                       Divider(
                                         color: Colors.black,
                                         height: 5,
                                         thickness: 0.1,
                                       ),
-                                      Row(
-                                        children: [
-                                          Text('IDO Start Date'),
-                                          Spacer(),
-                                          Text(globalInfo[0].start.toString()),
-                                        ],
-                                      ),
-                                      Divider(
-                                        color: Colors.black,
-                                        height: 5,
-                                        thickness: 0.1,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text('IDO End Date'),
-                                          Spacer(),
-                                          Text(globalInfo[0].stop.toString()),
-                                        ],
-                                      ),
+                                      Text(DateTime.fromMicrosecondsSinceEpoch(int.parse(globalInfo[0].stop.toString()) * 1000).toString().substring(0, 10)),
                                     ]))),
                                 FluidCell.withFixedHeight(
                                   size: context.fluid(12, xs: 12, s: 12, m: 12),
@@ -363,7 +367,7 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
     );
   }
 
-  SliverToBoxAdapter makeAppBar(BuildContext context) {
+  SliverToBoxAdapter makeAppBar(BuildContext context, TextEditingController searchController) {
     return SliverToBoxAdapter(
         child: FluidCell.fit(
             size: context.fluid(12),

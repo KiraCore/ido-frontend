@@ -9,14 +9,10 @@ class CustomAppBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        Flexible(
-            child: FlatButton(
-                onPressed: () => Navigator.pushNamed(context, '/'),
-                child: Image(image: AssetImage('ido_logo-min.png')))),
-        Searchbar(),
-        SizedBox(
-          width: 10,
-        ),
+        Flexible(child: FlatButton(onPressed: () => Navigator.pushNamed(context, '/'), child: Image(image: AssetImage('ido_logo-min.png')))),
+
+        Expanded(child: SizedBox(width: 200, child: Searchbar())),
+
         Theme(
           data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
           child: ModalTrigger(),

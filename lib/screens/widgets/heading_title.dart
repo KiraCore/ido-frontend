@@ -15,8 +15,7 @@ class HeadingTitle extends StatelessWidget {
         children: [
           Text(
             '· KIRA - Interchain Mining Event ·',
-            style:
-                GoogleFonts.sourceSansPro(textStyle: TextStyle(color: Colors.black, fontSize: 24)),
+            style: TextStyle(color: Colors.black, fontSize: 24),
           )
         ],
       ),

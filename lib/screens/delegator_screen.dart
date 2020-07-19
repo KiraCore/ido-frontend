@@ -35,7 +35,7 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
     _loading = true;
 
     super.initState();
-    getDelegator();
+    //getDelegator();
     _tabChartController = TabController(vsync: this, length: 3);
     _tabValidatorController = TabController(vsync: this, length: 2);
   }

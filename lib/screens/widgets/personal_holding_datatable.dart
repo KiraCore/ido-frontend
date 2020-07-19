@@ -16,7 +16,7 @@ class PersonalHoldings extends StatelessWidget {
     ], rows: [
       DataRow(cells: [
         DataCell(ListTile(
-          dense: true,
+          dense: false,
           leading: CircleAvatar(
             child: Image.asset(
               'assets/ido_logo.png',
