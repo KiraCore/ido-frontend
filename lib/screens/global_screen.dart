@@ -8,10 +8,11 @@ import 'package:ido_explorer/models/global.dart';
 import 'package:ido_explorer/screens/widgets/custom_appbar.dart';
 import 'package:ido_explorer/screens/widgets/custom_card.dart';
 import 'package:ido_explorer/screens/widgets/heading_title.dart';
+import 'package:ido_explorer/screens/widgets/hidden_card.dart';
 import 'package:ido_explorer/screens/widgets/ido_datatable.dart';
 import 'package:ido_explorer/screens/widgets/delegations_chart.dart';
+import 'package:ido_explorer/screens/widgets/income_chart.dart';
 import 'package:ido_explorer/screens/widgets/mining_chart.dart';
-import 'package:ido_explorer/screens/widgets/personal_holding_datatable.dart';
 
 class GlobalScreen extends StatefulWidget {
   @override
@@ -66,11 +67,65 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                             SliverToBoxAdapter(child: HeadingTitle()),
                             SliverFluidGrid(
                               fluid: true,
-                              spacing: 10,
+                              spacing: 30,
                               children: [
+                                if (context.breakpoint.isLargerThanS)
+                                  FluidCell.fit(
+                                      size: context.fluid(12, xs: 12, s: 12, m: 12),
+                                      child: HiddenCustomCard(
+                                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+                                        Text(
+                                          globalInfo[0].delegatorsCount.toString() + ' Delegations',
+                                          style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+                                        ),
+                                        Text(
+                                          globalInfo[0].validatorsCount.toString() + ' Validators',
+                                          style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+                                        ),
+                                        Text(
+                                          'IDO Start Date',
+                                          style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+                                        ),
+                                        Text(DateTime.fromMicrosecondsSinceEpoch(int.parse(globalInfo[0].start.toString()) * 1000).toString().substring(0, 10)),
+                                        Text(
+                                          'IDO End Date',
+                                          style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+                                        ),
+                                        Text(DateTime.fromMicrosecondsSinceEpoch(int.parse(globalInfo[0].stop.toString()) * 1000).toString().substring(0, 10)),
+                                      ]))),
+                                if (context.breakpoint.isSmallerThanM)
+                                  FluidCell.fit(
+                                      size: context.fluid(12, xs: 12, s: 12, m: 12),
+                                      child: HiddenCustomCard(
+                                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+                                        Text(
+                                          globalInfo[0].delegatorsCount.toString() + ' Delegations',
+                                          style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+                                        ),
+                                        Text(
+                                          globalInfo[0].validatorsCount.toString() + ' Validators',
+                                          style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+                                        ),
+                                      ]))),
+                                if (context.breakpoint.isSmallerThanM)
+                                  FluidCell.fit(
+                                      size: context.fluid(12, xs: 12, s: 12, m: 12),
+                                      child: HiddenCustomCard(
+                                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+                                        Text(
+                                          'IDO Start Date',
+                                          style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+                                        ),
+                                        Text(DateTime.fromMicrosecondsSinceEpoch(int.parse(globalInfo[0].start.toString()) * 1000).toString().substring(0, 10)),
+                                        Text(
+                                          'IDO End Date',
+                                          style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+                                        ),
+                                        Text(DateTime.fromMicrosecondsSinceEpoch(int.parse(globalInfo[0].stop.toString()) * 1000).toString().substring(0, 10)),
+                                      ]))),
                                 FluidCell.withFixedHeight(
-                                  size: context.fluid(12, xs: 12, s: 12, m: 12, l: 6, xl: 6),
-                                  height: 250,
+                                  size: context.fluid(9, xs: 12, s: 12, m: 9, l: 9, xl: 9),
+                                  height: 320,
                                   child: Scaffold(
                                     drawerScrimColor: Colors.white,
                                     appBar: TabBar(labelColor: Colors.black, indicatorColor: Colors.deepPurple, controller: _tabChartController, tabs: [
@@ -106,29 +161,118 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                         Container(
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.stretch,
+                                            children: <Widget>[IncomeChart()],
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.stretch,
                                             children: <Widget>[MiningChart()],
                                           ),
                                         ),
-                                        Center(
-                                          child: Text('Mined Chart', style: TextStyle(color: Colors.white)),
-                                        )
                                       ],
                                     ),
                                   ),
                                 ),
-                                FluidCell.withFixedHeight(
-                                  size: context.fluid(12, xs: 12, s: 12, m: 12, l: 6, xl: 6),
-                                  height: 250,
-                                  child: CustomCard(
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: PersonalHoldings(),
-                                    ),
-                                  ),
-                                ),
-                                FluidCell.withFixedHeight(
-                                    size: context.fluid(6, xs: 12, s: 12, m: 7),
-                                    height: 280,
+                                if (context.breakpoint.isLargerThanS)
+                                  FluidCell.fit(
+                                      size: context.fluid(3, xs: 3, s: 3, m: 3, l: 3, xl: 3),
+                                      child: HiddenCustomCard(
+                                          child: Column(
+                                        children: [
+                                          Text(
+                                            'Token prices to mine KEK',
+                                            style: TextStyle(fontSize: 18, color: Colors.black),
+                                          ),
+                                          ListTile(
+                                              title: Text('COSMOS'),
+                                              subtitle: Text('\$ 1.40'),
+                                              dense: false,
+                                              leading: CircleAvatar(
+                                                child: Image.network('https://s2.coinmarketcap.com/static/img/coins/200x200/3794.png'),
+                                              )),
+                                          ListTile(
+                                            title: Text('KIRA (KEK)'),
+                                            subtitle: Text('\$ 1.40'),
+                                            dense: false,
+                                            leading: CircleAvatar(
+                                              child: Image.network(
+                                                'https://pbs.twimg.com/profile_images/1267754825476907010/yFy0NuTQ.jpg',
+                                              ),
+                                            ),
+                                          ),
+                                          ListTile(
+                                            title: Text('Dfinity (DFN)'),
+                                            subtitle: Text('\$ 1.40'),
+                                            dense: false,
+                                            leading: CircleAvatar(
+                                              child: Image.network(
+                                                'https://assets.coingecko.com/coins/images/3326/large/Webp.net-resizeimage_%288%29.png?1547037927',
+                                              ),
+                                            ),
+                                          ),
+                                          ListTile(
+                                            title: Text('Sentinel (SENT)'),
+                                            subtitle: Text('\$ 1.40'),
+                                            dense: false,
+                                            leading: CircleAvatar(
+                                              child: Image.network(
+                                                'https://miro.medium.com/max/2732/1*WdfKTlUzprd7c221Qy3q2w.png',
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ))),
+                                if (context.breakpoint.isSmallerThanM)
+                                  FluidCell.fit(
+                                      size: context.fluid(12),
+                                      child: HiddenCustomCard(
+                                          child: Row(
+                                        children: [
+                                          CircleAvatar(
+                                            child: Image.network('https://s2.coinmarketcap.com/static/img/coins/200x200/3794.png'),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Column(
+                                            children: [Text('Cosmos'), Text('\$ 1.40')],
+                                          ),
+                                          Spacer(),
+                                          CircleAvatar(
+                                            child: Image.network('https://pbs.twimg.com/profile_images/1267754825476907010/yFy0NuTQ.jpg'),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Column(
+                                            children: [Text('KIRA'), Text('\$ 1.40')],
+                                          ),
+                                          Spacer(),
+                                          CircleAvatar(
+                                            child: Image.network('https://assets.coingecko.com/coins/images/3326/large/Webp.net-resizeimage_%288%29.png?1547037927'),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Column(
+                                            children: [Text('Dfinity (DFN)'), Text('\$ 1.40')],
+                                          ),
+                                          Spacer(),
+                                          CircleAvatar(
+                                            child: Image.network('https://miro.medium.com/max/2732/1*WdfKTlUzprd7c221Qy3q2w.png'),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Column(
+                                            children: [Text('Sentinel (SENT)'), Text('\$ 1.40')],
+                                          ),
+                                          Spacer(),
+                                        ],
+                                      ))),
+                                FluidCell.fit(
+                                    size: context.fluid(6, xs: 12, s: 12, m: 12),
                                     child: CustomCard(
                                         child: Column(children: [
                                       Row(
@@ -176,8 +320,8 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                               children: [
                                                 Container(
                                                   child: SizedBox(
-                                                    height: 150,
-                                                    width: 150,
+                                                    height: 100,
+                                                    width: 100,
                                                     child: PieChart(
                                                       PieChartData(
                                                           pieTouchData: PieTouchData(touchCallback: (pieTouchResponse) {
@@ -193,7 +337,7 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                                             show: false,
                                                           ),
                                                           sectionsSpace: 10,
-                                                          centerSpaceRadius: 25,
+                                                          centerSpaceRadius: 10,
                                                           sections: showMiningStats()),
                                                     ),
                                                   ),
@@ -218,7 +362,7 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                                   SizedBox(
                                                     height: 5,
                                                   ),
-                                                  Text((globalInfo[0].hashrate * globalInfo[0].price).toStringAsFixed(2)),
+                                                  Text(('\$' + (globalInfo[0].hashrate * globalInfo[0].price).toStringAsFixed(2))),
                                                 ],
                                               ),
                                             ),
@@ -226,9 +370,8 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                         ),
                                       )
                                     ]))),
-                                FluidCell.withFixedHeight(
-                                    size: context.fluid(4, xs: 12, s: 12, m: 5),
-                                    height: 280,
+                                FluidCell.fit(
+                                    size: context.fluid(6, xs: 12, s: 12, m: 12),
                                     child: CustomCard(
                                         child: Column(children: [
                                       Row(
@@ -255,19 +398,19 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Text('Funds delegated'),
+                                                  Text('Total fundraised'),
                                                   SizedBox(
                                                     height: 5,
                                                   ),
-                                                  Text('PlaceHolder'),
+                                                  Text('\$' + globalInfo[0].totalIncome.toStringAsFixed(2)),
                                                   SizedBox(
                                                     height: 30,
                                                   ),
-                                                  Text('Total Raised'),
+                                                  Text('Total value of all  \n fundraised delegated'),
                                                   SizedBox(
                                                     height: 5,
                                                   ),
-                                                  Text('PlaceHolder'),
+                                                  Text('\$' + globalInfo[0].delegationsValue.toStringAsFixed(2)),
                                                 ],
                                               ),
                                             ),
@@ -275,8 +418,8 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                               children: [
                                                 Container(
                                                     child: SizedBox(
-                                                  height: 150,
-                                                  width: 150,
+                                                  height: 100,
+                                                  width: 100,
                                                   child: PieChart(
                                                     PieChartData(
                                                         pieTouchData: PieTouchData(touchCallback: (pieTouchResponse) {
@@ -292,7 +435,7 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                                           show: false,
                                                         ),
                                                         sectionsSpace: 10,
-                                                        centerSpaceRadius: 25,
+                                                        centerSpaceRadius: 10,
                                                         sections: showingFundingStats()),
                                                   ),
                                                 )),
@@ -302,11 +445,15 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                         ),
                                       )
                                     ]))),
+                                /*
                                 FluidCell.fit(
                                     size: context.fluid(2, xs: 12, s: 12, m: 12),
                                     child: CustomCard(
                                         child: Column(children: [
-                                      Text('Total Delegations'),
+                                      Text(
+                                        'Total Delegations',
+                                        style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+                                      ),
                                       Divider(
                                         color: Colors.black,
                                         height: 5,
@@ -316,7 +463,10 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                         padding: const EdgeInsets.only(bottom: 10),
                                         child: Text(globalInfo[0].delegatorsCount.toString()),
                                       ),
-                                      Text('Total Validators'),
+                                      Text(
+                                        'Total Validators',
+                                        style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+                                      ),
                                       Divider(
                                         color: Colors.black,
                                         height: 5,
@@ -325,7 +475,10 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                       Text(globalInfo[0].validatorsCount.toString()),
                                       Padding(
                                         padding: const EdgeInsets.only(top: 10.0),
-                                        child: Text('IDO Start Date'),
+                                        child: Text(
+                                          'IDO Start Date',
+                                          style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+                                        ),
                                       ),
                                       Divider(
                                         color: Colors.black,
@@ -335,7 +488,10 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                       Text(DateTime.fromMicrosecondsSinceEpoch(int.parse(globalInfo[0].start.toString()) * 1000).toString().substring(0, 10)),
                                       Padding(
                                         padding: const EdgeInsets.only(top: 10.0),
-                                        child: Text('IDO End Date'),
+                                        child: Text(
+                                          'IDO End Date',
+                                          style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+                                        ),
                                       ),
                                       Divider(
                                         color: Colors.black,
@@ -344,6 +500,7 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                       ),
                                       Text(DateTime.fromMicrosecondsSinceEpoch(int.parse(globalInfo[0].stop.toString()) * 1000).toString().substring(0, 10)),
                                     ]))),
+                                    */
                                 FluidCell.withFixedHeight(
                                   size: context.fluid(12, xs: 12, s: 12, m: 12),
                                   height: 250,
@@ -385,12 +542,12 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
         children: [
           Text(
             leadingtext,
-            style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 15, color: Colors.grey[500])),
+            style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.grey[500])),
           ),
           Spacer(),
           Text(
             endingText,
-            style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600)),
+            style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.grey[500])),
           )
         ],
       ),

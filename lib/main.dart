@@ -18,11 +18,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.white,
-        textTheme: GoogleFonts.aBeeZeeTextTheme(Theme.of(context).textTheme),
+        textTheme: GoogleFonts.redHatTextTextTheme(Theme.of(context).textTheme),
         fontFamily: GoogleFonts.aleo().toString(),
+
         //canvasColor: Colors.transparent,
         //Theme.ofcontext().copywith
-
         // This makes the visual density adapt to the platform that you run
         // the app on. For desktop platforms, the controls will be smaller and
         // closer together (more dense) than on mobile platforms.

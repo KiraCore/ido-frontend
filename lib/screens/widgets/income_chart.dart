@@ -1,21 +1,21 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:ido_explorer/data/chart_service.dart';
-import 'package:ido_explorer/models/chart_delegation.dart';
+import 'package:ido_explorer/models/chart_income.dart';
 
-class DelegationsChart extends StatefulWidget {
+class IncomeChart extends StatefulWidget {
   @override
-  _DelegationsChartState createState() => _DelegationsChartState();
+  _IncomeChartState createState() => _IncomeChartState();
 }
 
-class _DelegationsChartState extends State<DelegationsChart> {
+class _IncomeChartState extends State<IncomeChart> {
   bool _loading;
-  var delegationsList;
+  var incomeInfo;
 
-  void getChartData() async {
-    APIChartService delegationsChart = APIChartService();
-    await delegationsChart.getDelegationsChart();
-    delegationsList = delegationsChart.chartDelegation;
+  void getIncomeChart() async {
+    APIChartService incomeChart = APIChartService();
+    await incomeChart.getIncomeChart();
+    incomeInfo = incomeChart.chartIncome;
     setState(() {
       _loading = false;
     });
@@ -33,7 +33,7 @@ class _DelegationsChartState extends State<DelegationsChart> {
   void initState() {
     _loading = true;
     super.initState();
-    getChartData();
+    getIncomeChart();
   }
 
   @override
@@ -139,15 +139,15 @@ class _DelegationsChartState extends State<DelegationsChart> {
         ),
       ),
       borderData: FlBorderData(show: false, border: Border.all(color: const Color(0xff37434d), width: 1)),
-      minX: delegationsList[0].timestamp,
-      maxX: delegationsList.last.timestamp,
+      minX: incomeInfo[0].timestamp,
+      maxX: incomeInfo.last.timestamp,
       minY: 0,
-      maxY: (delegationsList.last.delegations * 1.15),
-      lineBarsData: measurementsData(delegationsList),
+      maxY: (incomeInfo.last.delegations * 1.15),
+      lineBarsData: measurementsData(incomeInfo),
     );
   }
 
-  List<LineChartBarData> measurementsData(List<ChartDelegation> mlist) {
+  List<LineChartBarData> measurementsData(List<ChartIncome> mlist) {
     LineChartBarData lineChart = LineChartBarData(
       spots: [
         for (var items in mlist.toList())

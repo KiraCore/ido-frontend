@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HeadingTitle extends StatelessWidget {
   const HeadingTitle({
@@ -14,7 +13,7 @@ class HeadingTitle extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            '· KIRA - Interchain Mining Event ·',
+            'KIRA - Interchain Mining Event',
             style: TextStyle(color: Colors.black, fontSize: 24),
           )
         ],

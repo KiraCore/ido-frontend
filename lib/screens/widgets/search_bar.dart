@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Searchbar extends StatelessWidget {
   const Searchbar({
@@ -12,7 +11,6 @@ class Searchbar extends StatelessWidget {
     return Expanded(
       child: Container(
         height: 50,
-        
         child: TextField(
           controller: searchController,
           style: TextStyle(color: Colors.deepPurple),
@@ -29,10 +27,9 @@ class Searchbar extends StatelessWidget {
               suffixIcon: IconButton(
                 icon: Icon(Icons.search),
                 onPressed: () {
-                  print('WOWWWW');
+                  
                   print(searchController.text.toString());
                   if (searchController.text == null || searchController.text == "" || searchController.text == '' || searchController.text == "  ") {
-                    print('NOTHING');
                   } else {
                     try {
                       Navigator.pushNamed(context, '${searchController.text}');

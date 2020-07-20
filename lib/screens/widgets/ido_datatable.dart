@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 
 class IdoDataTable extends StatelessWidget {
   final String validatorName;
@@ -9,23 +9,47 @@ class IdoDataTable extends StatelessWidget {
   final String active;
   final String delegateNow;
 
-  IdoDataTable(
-      {this.validatorName = 'One',
-      this.stakedIn = '1000',
-      this.delegators = "11",
-      this.comission = "100%",
-      this.active = "YES",
-      this.delegateNow = "TRUE"});
+  IdoDataTable({this.validatorName = 'One', this.stakedIn = '1000', this.delegators = "11", this.comission = "100%", this.active = "YES", this.delegateNow = "TRUE"});
 
   @override
   Widget build(BuildContext context) {
     return DataTable(columns: [
-      DataColumn(label: Flexible(child: Text('Monikor'))),
-      DataColumn(label: Flexible(child: Text('Staked Bonded in '))),
-      DataColumn(label: Flexible(child: Text('Delegators '))),
-      DataColumn(label: Flexible(child: Text('Comission'))),
-      DataColumn(label: Flexible(child: Text('Active'))),
-      DataColumn(label: Flexible(child: Text('Start Mining'))),
+      DataColumn(
+          label: Flexible(
+              child: Text(
+        'Monikor',
+        style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+      ))),
+      DataColumn(
+          label: Flexible(
+              child: Text(
+        'Staked Bonded in ',
+        style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+      ))),
+      DataColumn(
+          label: Flexible(
+              child: Text(
+        'Delegators ',
+        style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+      ))),
+      DataColumn(
+          label: Flexible(
+              child: Text(
+        'Comission',
+        style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+      ))),
+      DataColumn(
+          label: Flexible(
+              child: Text(
+        'Active',
+        style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+      ))),
+      DataColumn(
+          label: Flexible(
+              child: Text(
+        'Start Mining',
+        style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+      ))),
     ], rows: [
       DataRow(cells: [
         DataCell(

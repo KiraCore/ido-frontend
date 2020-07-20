@@ -22,8 +22,13 @@ class _MiningChartState extends State<MiningChart> {
   }
 
   List<Color> gradientColors = [
-    const Color(0xff23b6e6),
-    const Color(0xff02d39a),
+    //const Color(0xff23b6e6),
+    //const Color(0xff02d39a),
+    Colors.deepOrange,
+    Colors.pink,
+    Colors.purple,
+    Colors.deepPurple,
+    const Color.fromRGBO(103, 58, 183, 1),
   ];
 
   @override
@@ -77,8 +82,7 @@ class _MiningChartState extends State<MiningChart> {
         bottomTitles: SideTitles(
           showTitles: false,
           reservedSize: 0, //22
-          textStyle:
-              const TextStyle(color: Color(0xff68737d), fontWeight: FontWeight.bold, fontSize: 16),
+          textStyle: const TextStyle(color: Color(0xff68737d), fontWeight: FontWeight.bold, fontSize: 16),
           getTitles: (value) {
             //var _r = DateTime.fromMillisecondsSinceEpoch(value.toInt() * 1000).toString();
             /*
@@ -94,7 +98,7 @@ class _MiningChartState extends State<MiningChart> {
             */
             return '';
           },
-          margin: 0,//8
+          margin: 0, //8
         ),
         leftTitles: SideTitles(
           showTitles: false,
@@ -135,12 +139,11 @@ class _MiningChartState extends State<MiningChart> {
           margin: 0,
         ),
       ),
-      borderData:
-          FlBorderData(show: false, border: Border.all(color: const Color(0xff37434d), width: 1)),
+      borderData: FlBorderData(show: false, border: Border.all(color: const Color(0xff37434d), width: 1)),
       minX: miningList[0].timestamp,
       maxX: miningList.last.timestamp,
       minY: 0,
-      maxY: (miningList.last.hash * 1),
+      maxY: (miningList.last.hash * 1.15),
       lineBarsData: measurementsData(miningList),
     );
   }

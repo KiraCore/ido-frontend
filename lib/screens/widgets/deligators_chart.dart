@@ -1,21 +1,23 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:ido_explorer/data/chart_service.dart';
-import 'package:ido_explorer/models/chart_delegation.dart';
+import 'package:ido_explorer/data/services.dart';
+import 'package:ido_explorer/screens/delegator_screen.dart';
 
-class DelegationsChart extends StatefulWidget {
+class DelegatorsChart extends StatefulWidget {
+ final String address;
+  DelegatorsChart(this.address);
   @override
-  _DelegationsChartState createState() => _DelegationsChartState();
+  _DelegatorsChartState createState() => _DelegatorsChartState();
 }
 
-class _DelegationsChartState extends State<DelegationsChart> {
+class _DelegatorsChartState extends State<DelegatorsChart> {
   bool _loading;
-  var delegationsList;
+  var delegatorsList;
 
   void getChartData() async {
-    APIChartService delegationsChart = APIChartService();
-    await delegationsChart.getDelegationsChart();
-    delegationsList = delegationsChart.chartDelegation;
+    ApiServices delegatorsChart = ApiServices(address: widget.address);
+    await delegatorsChart.getDelegatorChart();
+    delegatorsList = delegatorsChart.chartDelegator;
     setState(() {
       _loading = false;
     });
@@ -139,15 +141,15 @@ class _DelegationsChartState extends State<DelegationsChart> {
         ),
       ),
       borderData: FlBorderData(show: false, border: Border.all(color: const Color(0xff37434d), width: 1)),
-      minX: delegationsList[0].timestamp,
-      maxX: delegationsList.last.timestamp,
+      minX: delegatorsList[0].timestamp,
+      maxX: delegatorsList.last.timestamp,
       minY: 0,
-      maxY: (delegationsList.last.delegations * 1.15),
-      lineBarsData: measurementsData(delegationsList),
+      maxY: (delegatorsList.last.delegations * 2.0),
+      lineBarsData: measurementsData(delegatorsList),
     );
   }
 
-  List<LineChartBarData> measurementsData(List<ChartDelegation> mlist) {
+  List<LineChartBarData> measurementsData(List<ChartDelegator> mlist) {
     LineChartBarData lineChart = LineChartBarData(
       spots: [
         for (var items in mlist.toList())

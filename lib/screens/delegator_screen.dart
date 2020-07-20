@@ -1,11 +1,14 @@
 import 'package:fluid_layout/fluid_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ido_explorer/data/services.dart';
 import 'package:ido_explorer/models/delegator.dart';
 import 'package:ido_explorer/screens/widgets/custom_appbar.dart';
 import 'package:ido_explorer/screens/widgets/custom_card.dart';
+import 'package:ido_explorer/screens/widgets/deligators_chart.dart';
 import 'package:ido_explorer/screens/widgets/heading_title.dart';
 import 'package:ido_explorer/screens/widgets/ido_datatable.dart';
+import 'package:ido_explorer/screens/widgets/mining_chart.dart';
 
 class DelegatorScreen extends StatefulWidget {
   final String address;
@@ -35,7 +38,7 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
     _loading = true;
 
     super.initState();
-    //getDelegator();
+    getDelegator();
     _tabChartController = TabController(vsync: this, length: 3);
     _tabValidatorController = TabController(vsync: this, length: 2);
   }
@@ -51,7 +54,7 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
           : Container(
               height: size.height,
               width: size.width,
-              decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/ido_background.png"), fit: BoxFit.fill)),
+              //decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/ido_background.png"), fit: BoxFit.fill)),
               child: FluidLayout(
                   child: Builder(
                       builder: (context) => CustomScrollView(slivers: <Widget>[
@@ -116,9 +119,8 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
                                   size: context.fluid(12, xs: 12, s: 12, m: 12, l: 6, xl: 6),
                                   height: 250,
                                   child: Scaffold(
-                                    backgroundColor: Color.fromRGBO(42, 3, 76, 1),
                                     drawerScrimColor: Colors.white,
-                                    appBar: TabBar(labelColor: Colors.white, indicatorColor: Colors.deepPurple, controller: _tabChartController, tabs: [
+                                    appBar: TabBar(labelColor: Colors.black, indicatorColor: Colors.deepPurple, controller: _tabChartController, tabs: [
                                       Tab(
                                         child: Text(
                                           'Delegations',
@@ -139,16 +141,20 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
                                       ),
                                     ]),
                                     body: TabBarView(
+                                      physics: NeverScrollableScrollPhysics(),
                                       controller: _tabChartController,
                                       children: [
-                                        Center(
-                                          child: Text(
-                                            'Delegations Chart',
-                                            style: TextStyle(color: Colors.white),
+                                        Container(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                                            children: <Widget>[DelegatorsChart(widget.address)],
                                           ),
                                         ),
-                                        Center(
-                                          child: Text('Funds Comittted Chart', style: TextStyle(color: Colors.white)),
+                                        Container(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                                            children: <Widget>[MiningChart()],
+                                          ),
                                         ),
                                         Center(
                                           child: Text('Mined Chart', style: TextStyle(color: Colors.white)),
@@ -183,7 +189,7 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
                                       ),
                                       Row(
                                         children: [
-                                          Text('Total Value of Delegations :'),
+                                          Text('Total Value of Delegations :', style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black))),
                                           Spacer(),
                                           Text(delegatorInfo[0].delegations.toString() + ' (' + delegatorInfo[0].delegationsValue.toString() + ')'),
                                         ],
@@ -200,7 +206,7 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
                                       ),
                                       Row(
                                         children: [
-                                          Text('Validator Address:'),
+                                          Text('Validator Address:', style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black))),
                                           SizedBox(
                                             width: 10,
                                           ),
@@ -211,7 +217,11 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
                                         height: 10,
                                       ),
                                       Row(
-                                        children: [Text('Network:'), Spacer(), Text(delegatorInfo[0].network.toString())],
+                                        children: [
+                                          Text('Network:', style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black))),
+                                          Spacer(),
+                                          Text(delegatorInfo[0].network.toString())
+                                        ],
                                       ),
                                     ]))),
                                 FluidCell.withFixedHeight(
@@ -273,4 +283,11 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
       ),
     );
   }
+}
+
+class ChartDelegator {
+  final double timestamp;
+  final double delegations;
+
+  ChartDelegator(this.timestamp, this.delegations);
 }

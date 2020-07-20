@@ -1,13 +1,13 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:ido_explorer/models/chart_delegation.dart';
+import 'package:ido_explorer/models/chart_income.dart';
 import 'package:ido_explorer/models/chart_mining.dart';
-
 
 class APIChartService {
   List<ChartDelegation> chartDelegation = [];
   List<ChartMining> chartMining = [];
+  List<ChartIncome> chartIncome = [];
 
   Future<void> getDelegationsChart() async {
     var data = await http.get("https://ido-test.kiracore.com/KIRA-IDO-TEST/offering/summary.json");
@@ -34,6 +34,34 @@ class APIChartService {
       //String now = key;
       //print(now);
       chartDelegation.add(delegationsValues);
+    });
+  }
+
+  Future<void> getIncomeChart() async {
+    var data = await http.get("https://ido-test.kiracore.com/KIRA-IDO-TEST/offering/summary.json");
+
+    var jsonData = json.decode(data.body);
+
+    Map _sample = jsonData['income_report'];
+//double.parse(key)
+    _sample.forEach((key, value) {
+      ChartIncome incomeValues = ChartIncome(double.parse(key), value);
+      //print("$key : $value");
+      //print(key.runtimeType);
+      //print(value.runtimeType);
+
+      //String formateDate(DateTime date) => new DateFormat("MMM d").format(date);
+      //print(formateDate.toString());
+      //print(DateTime.fromMicrosecondsSinceEpoch(int.parse(key) * 1000));
+
+      //DateTime dateValue = DateTime.fromMicrosecondsSinceEpoch(int.parse(key) * 1000);
+      //DateTime pastMonth = dateValue.subtract(Duration(days: 10));
+      //print(pastMonth);
+      //print(dateValue);
+
+      //String now = key;
+      //print(now);
+      chartIncome.add(incomeValues);
     });
   }
 
