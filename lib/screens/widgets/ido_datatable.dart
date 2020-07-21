@@ -1,94 +1,86 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ido_explorer/models/table_operators.dart';
 
 class IdoDataTable extends StatelessWidget {
-  final String validatorName;
-  final String stakedIn;
-  final String delegators;
-  final String comission;
-  final String active;
-  final String delegateNow;
+  List<TableOperators> tableInfo = [];
 
-  IdoDataTable({this.validatorName = 'One', this.stakedIn = '1000', this.delegators = "11", this.comission = "100%", this.active = "YES", this.delegateNow = "TRUE"});
+  IdoDataTable(this.tableInfo);
 
   @override
   Widget build(BuildContext context) {
-    return DataTable(columns: [
-      DataColumn(
-          label: Flexible(
-              child: Text(
-        'Monikor',
-        style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
-      ))),
-      DataColumn(
-          label: Flexible(
-              child: Text(
-        'Staked Bonded in ',
-        style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
-      ))),
-      DataColumn(
-          label: Flexible(
-              child: Text(
-        'Delegators ',
-        style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
-      ))),
-      DataColumn(
-          label: Flexible(
-              child: Text(
-        'Comission',
-        style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
-      ))),
-      DataColumn(
-          label: Flexible(
-              child: Text(
-        'Active',
-        style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
-      ))),
-      DataColumn(
-          label: Flexible(
-              child: Text(
-        'Start Mining',
-        style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
-      ))),
-    ], rows: [
-      DataRow(cells: [
-        DataCell(
-          Text(validatorName),
-        ),
-        DataCell(
-          Text(stakedIn),
-        ),
-        DataCell(
-          Text(delegators),
-        ),
-        DataCell(
-          Text(comission),
-        ),
-        DataCell(active == 'YES'
-            ? Icon(
-                Icons.done_outline,
-                color: Colors.green,
-              )
-            : Icon(
-                Icons.clear,
-                color: Colors.red,
-              )),
-        DataCell(RawMaterialButton(
-          onPressed: () {},
-          fillColor: Colors.white,
-          highlightColor: Colors.deepPurple,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text('Delegate now',
-                style: TextStyle(
-                  color: Colors.black,
-                )),
-          ),
-        )),
-      ])
-    ]);
+    return DataTable(
+        columnSpacing: 50,
+        columns: [
+          DataColumn(
+              label: Flexible(
+                  child: Text(
+            'Token',
+            style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+          ))),
+          DataColumn(
+              label: Flexible(
+                  child: Text(
+            'Address ',
+            style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+          ))),
+          DataColumn(
+              label: Flexible(
+                  child: Text(
+            'Network ',
+            style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+          ))),
+          DataColumn(
+              label: Flexible(
+                  child: Text(
+            'Delegations',
+            style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+          ))),
+          /*
+          DataColumn(
+              label: Flexible(
+                  child: Text(
+            'Delegations',
+            style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+          ))),
+          */
+          DataColumn(
+              label: Flexible(
+                  child: Text(
+            'Comission',
+            style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+          ))),
+          DataColumn(
+              label: Flexible(
+                  child: Text(
+            'Active',
+            style: GoogleFonts.sourceSansPro(textStyle: TextStyle(fontSize: 16, color: Colors.black)),
+          ))),
+        ],
+        rows: tableInfo
+            .map((e) => DataRow(cells: [
+                  DataCell(Text(e.symbol)),
+                  DataCell(Text(e.address)),
+                  DataCell(Text(e.network)),
+                  //DataCell(Text(e.delegatorsCount.toString())),
+                  DataCell(Text(e.delegationsValue.toStringAsFixed(2))),
+                  DataCell(Text(e.comission.toStringAsFixed(2) + '%')),
+                  DataCell(Card(
+                    child: Padding(
+                        padding: EdgeInsets.all(0),
+                        child: e.active
+                            ? IconButton(
+                                color: Colors.green,
+                                onPressed: () {},
+                                icon: Icon(Icons.done_outline),
+                              )
+                            : IconButton(
+                                color: Colors.grey,
+                                onPressed: () {},
+                                icon: Icon(Icons.do_not_disturb_on),
+                              )),
+                  )),
+                ]))
+            .toList());
   }
 }

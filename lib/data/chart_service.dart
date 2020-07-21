@@ -3,11 +3,14 @@ import 'package:http/http.dart' as http;
 import 'package:ido_explorer/models/chart_delegation.dart';
 import 'package:ido_explorer/models/chart_income.dart';
 import 'package:ido_explorer/models/chart_mining.dart';
+import 'package:ido_explorer/models/table_operators.dart';
 
 class APIChartService {
   List<ChartDelegation> chartDelegation = [];
   List<ChartMining> chartMining = [];
   List<ChartIncome> chartIncome = [];
+
+  List<TableOperators> tableOperators = [];
 
   Future<void> getDelegationsChart() async {
     var data = await http.get("https://ido-test.kiracore.com/KIRA-IDO-TEST/offering/summary.json");
@@ -90,6 +93,24 @@ class APIChartService {
       //String now = key;
       //print(now);
       chartMining.add(minerValues);
+    });
+  }
+
+  Future<void> getOperatorsTable() async {
+    var data = await http.get("https://ido-test.kiracore.com/KIRA-IDO-TEST/offering/summary.json");
+
+    var jsonData = json.decode(data.body);
+    jsonData['operators'].forEach((element) {
+      TableOperators operatorsValues = TableOperators(
+          symbol: element['symbol'],
+          address: element['address'],
+          network: element['network'],
+          delegatorsCount: element['delegators_count'],
+          delegations: element['delegations'],
+          delegationsValue: element['delegations_value'],
+          comission: element['comission'],
+          active: element['active']);
+      tableOperators.add(operatorsValues);
     });
   }
 }

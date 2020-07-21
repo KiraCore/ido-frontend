@@ -7,7 +7,7 @@ import 'package:ido_explorer/screens/widgets/custom_appbar.dart';
 import 'package:ido_explorer/screens/widgets/custom_card.dart';
 import 'package:ido_explorer/screens/widgets/deligators_chart.dart';
 import 'package:ido_explorer/screens/widgets/heading_title.dart';
-import 'package:ido_explorer/screens/widgets/ido_datatable.dart';
+
 import 'package:ido_explorer/screens/widgets/mining_chart.dart';
 
 class DelegatorScreen extends StatefulWidget {
@@ -241,7 +241,7 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
                                     body: TabBarView(
                                       controller: _tabValidatorController,
                                       children: [
-                                        SingleChildScrollView(scrollDirection: Axis.vertical, child: IdoDataTable()),
+                                        //SingleChildScrollView(scrollDirection: Axis.vertical, child: IdoDataTable()),
                                         Center(child: Text('Delegated Validators Table')),
                                       ],
                                     ),

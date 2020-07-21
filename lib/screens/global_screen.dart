@@ -3,8 +3,10 @@ import 'package:fluid_layout/fluid_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ido_explorer/data/chart_service.dart';
 import 'package:ido_explorer/data/services.dart';
 import 'package:ido_explorer/models/global.dart';
+import 'package:ido_explorer/models/table_operators.dart';
 import 'package:ido_explorer/screens/widgets/custom_appbar.dart';
 import 'package:ido_explorer/screens/widgets/custom_card.dart';
 import 'package:ido_explorer/screens/widgets/heading_title.dart';
@@ -26,12 +28,16 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
   int touchedIndex2;
 
   List<Global> globalInfo = [];
+  List<TableOperators> tableInfo = [];
   bool _loading;
 
   void getGlobal() async {
     ApiServices apiOne = ApiServices();
     await apiOne.getGlobal();
     globalInfo = apiOne.globalInfo;
+    APIChartService apiTwo = APIChartService();
+    await apiTwo.getOperatorsTable();
+    tableInfo = apiTwo.tableOperators;
 
     setState(() {
       _loading = false;
@@ -510,8 +516,10 @@ class _GlobalScreenState extends State<GlobalScreen> with TickerProviderStateMix
                                     body: Column(
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children: [
-                                        Container(
-                                          child: SingleChildScrollView(scrollDirection: Axis.vertical, child: IdoDataTable()),
+                                        Center(
+                                          child: Container(
+                                            child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: IdoDataTable(tableInfo)),
+                                          ),
                                         )
                                       ],
                                     ),
