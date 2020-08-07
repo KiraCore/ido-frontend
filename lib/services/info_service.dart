@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:IDO_Kira/models/delegator_model.dart';
 import 'package:IDO_Kira/models/ticker_priceModel.dart';
+import 'package:bech32/bech32.dart';
+import 'package:hex/hex.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:IDO_Kira/models/kira_model.dart';
@@ -44,8 +47,19 @@ class InfoService {
     });
   }
 
+  String retrieveHex({String address}) {
+    Bech32Codec bech32codec = Bech32Codec();
+    var bech32 = bech32codec.decode(address);
+    //Convert address from 5 bit to 8 bit
+    var converted8bitBech32 = _convertBits(bech32.data, 5, 8);
+    var hexAddress = HEX.encode(converted8bitBech32);
+
+    return hexAddress;
+  }
+
   Future<void> getDelegatorInfo({address}) async {
-    var data = await http.get("https://ido-test.kiracore.com/KIRA-IDO-TEST/delegators/$address/summary.json");
+    var hexAddress = retrieveHex(address: address);
+    var data = await http.get("https://ido-test.kiracore.com/KIRA-IDO-TEST/delegators/$hexAddress/summary.json");
     var jsonData = json.decode(data.body);
     //print('$address');
     DelegatorModel delegator = DelegatorModel(
@@ -66,4 +80,40 @@ class InfoService {
     );
     delegatorInfo.add(delegator);
   }
+}
+
+Uint8List _convertBits(
+  List<int> data,
+  int from,
+  int to, {
+  bool pad = true,
+}) {
+  var acc = 0;
+  var bits = 0;
+  final result = <int>[];
+  final maxv = (1 << to) - 1;
+
+  for (var v in data) {
+    if (v < 0 || (v >> from) != 0) {
+      throw Exception();
+    }
+    acc = (acc << from) | v;
+    bits += from;
+    while (bits >= to) {
+      bits -= to;
+      result.add((acc >> bits) & maxv);
+    }
+  }
+
+  if (pad) {
+    if (bits > 0) {
+      result.add((acc << (to - bits)) & maxv);
+    }
+  } else if (bits >= from) {
+    throw Exception('illegal zero padding');
+  } else if (((acc << (to - bits)) & maxv) != 0) {
+    throw Exception('non zero');
+  }
+
+  return Uint8List.fromList(result);
 }

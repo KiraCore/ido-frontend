@@ -65,53 +65,48 @@ class KiraFooter extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Column(
-                  children: [
-                    FlatButton(
-                      onPressed: () => Navigator.pushNamed(context, '/'),
-                      child: Image(
-                        image: AssetImage('ido_logotwo.PNG'),
-                        height: 30,
-                      ),
-                    )
-                  ],
-                ),
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        IconButton(
-                            icon: FaIcon(
-                              FontAwesomeIcons.twitter,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => _launchSocials('twitter')),
-                        IconButton(
-                            icon: FaIcon(
-                              FontAwesomeIcons.github,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => _launchSocials('github')),
-                        IconButton(
-                            icon: FaIcon(
-                              FontAwesomeIcons.mediumM,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => _launchSocials('medium')),
-                        IconButton(
-                            icon: FaIcon(
-                              FontAwesomeIcons.telegram,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => _launchSocials('telegram')),
-                        IconButton(
-                            icon: FaIcon(
-                              FontAwesomeIcons.solidEnvelope,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => _launchSocials('email')),
-                      ],
+                Flexible(
+                  child: FlatButton(
+                    onPressed: () => Navigator.pushNamed(context, '/'),
+                    child: Image(
+                      image: AssetImage('ido_logotwo.PNG'),
+                      height: 30,
                     ),
+                  ),
+                ),
+                Wrap(
+                  direction: Axis.horizontal,
+                  children: [
+                    IconButton(
+                        icon: FaIcon(
+                          FontAwesomeIcons.twitter,
+                          color: Colors.white,
+                        ),
+                        onPressed: () => _launchSocials('twitter')),
+                    IconButton(
+                        icon: FaIcon(
+                          FontAwesomeIcons.github,
+                          color: Colors.white,
+                        ),
+                        onPressed: () => _launchSocials('github')),
+                    IconButton(
+                        icon: FaIcon(
+                          FontAwesomeIcons.mediumM,
+                          color: Colors.white,
+                        ),
+                        onPressed: () => _launchSocials('medium')),
+                    IconButton(
+                        icon: FaIcon(
+                          FontAwesomeIcons.telegram,
+                          color: Colors.white,
+                        ),
+                        onPressed: () => _launchSocials('telegram')),
+                    IconButton(
+                        icon: FaIcon(
+                          FontAwesomeIcons.solidEnvelope,
+                          color: Colors.white,
+                        ),
+                        onPressed: () => _launchSocials('email')),
                   ],
                 ),
               ],

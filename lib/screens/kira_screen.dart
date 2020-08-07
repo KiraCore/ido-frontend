@@ -156,33 +156,35 @@ class _KiraScreenState extends State<KiraScreen> with TickerProviderStateMixin {
                 ],
               ),
             ),
-            Column(
-              children: [
-                Container(
-                  child: SizedBox(
-                    height: 100,
-                    width: 100,
-                    child: PieChart(
-                      PieChartData(
-                          pieTouchData: PieTouchData(touchCallback: (pieTouchResponse) {
-                            setState(() {
-                              if (pieTouchResponse.touchInput is FlLongPressEnd || pieTouchResponse.touchInput is FlPanEnd) {
-                                touchedIndex = -1;
-                              } else {
-                                touchedIndex = pieTouchResponse.touchedSectionIndex;
-                              }
-                            });
-                          }),
-                          borderData: FlBorderData(
-                            show: false,
-                          ),
-                          sectionsSpace: 10,
-                          centerSpaceRadius: 10,
-                          sections: showMiningStats()),
+            Flexible(
+              child: Column(
+                children: [
+                  Container(
+                    child: SizedBox(
+                      height: 100,
+                      width: 100,
+                      child: PieChart(
+                        PieChartData(
+                            pieTouchData: PieTouchData(touchCallback: (pieTouchResponse) {
+                              setState(() {
+                                if (pieTouchResponse.touchInput is FlLongPressEnd || pieTouchResponse.touchInput is FlPanEnd) {
+                                  touchedIndex = -1;
+                                } else {
+                                  touchedIndex = pieTouchResponse.touchedSectionIndex;
+                                }
+                              });
+                            }),
+                            borderData: FlBorderData(
+                              show: false,
+                            ),
+                            sectionsSpace: 10,
+                            centerSpaceRadius: 10,
+                            sections: showMiningStats()),
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
             Container(
               width: 130,
