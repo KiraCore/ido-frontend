@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
 
 // ignore: must_be_immutable
 class ValidatorsTable extends StatefulWidget {
@@ -93,7 +94,29 @@ class ValidatorsTableState extends State<ValidatorsTable> {
         rows: widget.tableInfo
             .map((e) => DataRow(cells: [
                   DataCell(Text(e.symbol)),
-                  DataCell(Text(e.address)),
+                  DataCell(Container(
+                    child: Row(
+                      children: [
+                        Flexible(
+                          child: Container(
+                            width: 150,
+                            child: Text(
+                              e.address,
+                              softWrap: true,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                        Text(e.address.toString().substring((e.address).length - 5)),
+                        IconButton(
+                            icon: Icon(Icons.copy),
+                            onPressed: () {
+                              Clipboard.setData(ClipboardData(text: e.address));
+                            }),
+                      ],
+                    ),
+                    width: 230,
+                  )),
                   DataCell(Text(e.network)),
                   //DataCell(Text(e.delegatorsCount.toString())),
                   DataCell(Text(e.delegationsValue.toStringAsFixed(2))),

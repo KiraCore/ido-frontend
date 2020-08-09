@@ -34,7 +34,7 @@ class CustomAppBar extends StatelessWidget {
                   child: FlatButton(
                     onPressed: () => Navigator.pushNamed(context, '/'),
                     child: Image(
-                      image: AssetImage('ido_logo.PNG'),
+                      image: AssetImage('ido_logo.png'),
                       height: 30,
                     ),
                   ),

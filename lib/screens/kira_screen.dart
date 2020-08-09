@@ -52,9 +52,9 @@ class _KiraScreenState extends State<KiraScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     _loading = true;
-    super.initState();
     getKiraInfomation();
     getTokenInformation();
+    super.initState();
     _tabChartController = TabController(vsync: this, length: 3);
   }
 
@@ -76,7 +76,6 @@ class _KiraScreenState extends State<KiraScreen> with TickerProviderStateMixin {
                     builder: (BuildContext context) => CustomScrollView(
                       slivers: <Widget>[
                         SliverToBoxAdapter(child: CustomAppBar()),
-
                         //Silver(context),
                         HeadingBanner(),
                         SliverFluidGrid(

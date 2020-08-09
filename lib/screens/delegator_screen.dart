@@ -13,8 +13,8 @@ import 'package:IDO_Kira/widgets/hidden_card.dart';
 import 'package:IDO_Kira/widgets/kira_footer.dart';
 import 'package:fluid_layout/fluid_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:status_alert/status_alert.dart';
 
 class DelegatorScreen extends StatefulWidget {
   final String address;
@@ -33,17 +33,15 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
   List<DelegatorValidatorTableModel> validatorInfo = [];
 
   bool _loading;
+  bool _invalid;
 
   @override
   void initState() {
+    _invalid = true;
     _loading = true;
     super.initState();
     _tabChartController = TabController(vsync: this, length: 3);
     getDelegatorInfo();
-  }
-
-  void statusAlertScreen() {
-    return StatusAlert.show(context, duration: Duration(seconds: 50), title: 'Failed to connect and fetch data', subtitle: 'Check internet connection and try again', configuration: IconConfiguration(icon: Icons.sms_failed));
   }
 
   void getDelegatorInfo() async {
@@ -54,14 +52,18 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
       ChartService validatorAPI = ChartService();
       await validatorAPI.getDelegatorValidatorTable(address: widget.address);
       validatorInfo = validatorAPI.delegatorValidatorTable;
+      setState(() {
+        _loading = false;
+        _invalid = false;
+      });
     } catch (e) {
-      statusAlertScreen();
+      setState(() {
+        _loading = false;
+        _invalid = true;
+      });
+      //statusAlertScreen();
       print('getDelegatorInfo: Failed to Retrieve Delegator Information : Exception: ' + e);
     }
-
-    setState(() {
-      _loading = false;
-    });
   }
 
   void getValidatorInfo() async {}
@@ -71,63 +73,90 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
     return Scaffold(
         body: _loading
             ? Center(child: CircularProgressIndicator())
-            : Container(
-                child: FluidLayout(
-                  child: Builder(
-                    builder: (BuildContext context) => CustomScrollView(
-                      slivers: <Widget>[
-                        //SilverAppBar(context),
-                        SliverToBoxAdapter(child: CustomAppBar()),
-
-                        HeadingBanner(),
-                        SliverFluidGrid(
-                          fluid: true,
-                          spacing: 30,
-                          children: [
-                            FluidCell.fit(
-                                size: context.fluid(12, xs: 12, s: 12, m: 12),
-                                child: HiddenCustomCard(
-                                    child: Column(children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Address ' + delegatorInfo[0].kiraAddress,
-                                        style: GoogleFonts.robotoSlab(textStyle: TextStyle(fontSize: 20, color: Colors.black)),
-                                      ),
-                                      SizedBox(
-                                        width: 40,
-                                        height: 40,
-                                        child: IconButton(
-                                          icon: Icon(Icons.content_copy),
-                                          onPressed: () {},
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                ]))),
-                            FluidCell.fit(size: context.fluid(12, xs: 12, s: 12, m: 12, l: 6, xl: 6), child: buildCharts()),
-                            FluidCell.withFixedHeight(
-                              size: context.fluid(12, xs: 12, s: 12, m: 12, l: 6, xl: 6),
-                              height: 250,
-                              child: buildTabBar(),
-                            ),
-                            FluidCell.withFixedHeight(
-                              size: context.fluid(12, xs: 12, s: 12, m: 12, l: 12, xl: 12),
-                              height: 400,
-                              child: DelegatorValidatorTable(
-                                tableInfo: validatorInfo,
+            : _invalid
+                ? SafeArea(
+                    child: Column(
+                      children: [
+                        CustomAppBar(),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                " Kira Explorer could not load content",
+                                style: GoogleFonts.robotoSlab(textStyle: TextStyle(fontSize: 20, color: Colors.black)),
                               ),
-                            ),
-                          ],
-                        ),
-                        SliverToBoxAdapter(
-                          child: KiraFooter(),
+                              Text(
+                                "Invalid address: " + '${widget.address}',
+                                style: GoogleFonts.robotoSlab(textStyle: TextStyle(fontSize: 20, color: Colors.black)),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                ),
-              ));
+                  )
+                : Container(
+                    child: FluidLayout(
+                      child: Builder(
+                        builder: (BuildContext context) => CustomScrollView(
+                          slivers: <Widget>[
+                            //SilverAppBar(context),
+                            SliverToBoxAdapter(child: CustomAppBar()),
+
+                            HeadingBanner(),
+                            SliverFluidGrid(
+                              fluid: true,
+                              spacing: 30,
+                              children: [
+                                FluidCell.fit(
+                                    size: context.fluid(12, xs: 12, s: 12, m: 12),
+                                    child: HiddenCustomCard(
+                                        child: Column(children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            delegatorInfo[0].kiraAddress,
+                                            style: GoogleFonts.robotoSlab(textStyle: TextStyle(fontSize: 20, color: Colors.black)),
+                                          ),
+                                          SizedBox(
+                                            width: 40,
+                                            height: 40,
+                                            child: IconButton(
+                                              icon: Icon(Icons.content_copy),
+                                              onPressed: () {
+                                                Clipboard.setData(ClipboardData(
+                                                  text: delegatorInfo[0].kiraAddress,
+                                                ));
+                                              },
+                                            ),
+                                          )
+                                        ],
+                                      )
+                                    ]))),
+                                FluidCell.fit(size: context.fluid(12, xs: 12, s: 12, m: 12, l: 6, xl: 6), child: buildCharts()),
+                                FluidCell.withFixedHeight(
+                                  size: context.fluid(12, xs: 12, s: 12, m: 12, l: 6, xl: 6),
+                                  height: 250,
+                                  child: buildTabBar(),
+                                ),
+                                FluidCell.withFixedHeight(
+                                  size: context.fluid(12, xs: 12, s: 12, m: 12, l: 12, xl: 12),
+                                  height: 400,
+                                  child: DelegatorValidatorTable(
+                                    tableInfo: validatorInfo,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SliverToBoxAdapter(
+                              child: KiraFooter(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ));
   }
 
   Scaffold buildTabBar() {

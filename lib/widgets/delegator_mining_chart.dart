@@ -146,7 +146,7 @@ class _DelegatorMiningChartState extends State<DelegatorMiningChart> {
       minX: miningList[0].timestamp,
       maxX: miningList.last.timestamp,
       minY: 0,
-      maxY: (miningList.last.hash * 1.15),
+      maxY: (miningList.last.hash * 3),
       lineBarsData: measurementsData(miningList),
     );
   }

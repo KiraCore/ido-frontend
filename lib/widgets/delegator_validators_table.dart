@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
@@ -88,7 +89,23 @@ class DelegatorValidatorsTableState extends State<DelegatorValidatorsTable> {
         rows: widget.tableInfo
             .map((e) => DataRow(cells: [
                   //DataCell(Text(e.tickerBase)),
-                  DataCell(Text(e.address)),
+                  DataCell(Row(
+                    children: [
+                      Container(
+                          width: 200,
+                          child: Text(
+                            e.address,
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                          )),
+                      Text(e.address.toString().substring((e.address).length - 5)),
+                      IconButton(
+                          icon: Icon(Icons.copy),
+                          onPressed: () {
+                            Clipboard.setData(ClipboardData(text: e.address));
+                          }),
+                    ],
+                  )),
                   //DataCell(Text(e.network)),
                   //DataCell(Text(e.delegatorsCount.toString())),
                   DataCell(Text(e.delegations.toStringAsFixed(2))),

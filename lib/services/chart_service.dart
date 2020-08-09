@@ -57,7 +57,6 @@ class ChartService {
     //Convert address from 5 bit to 8 bit
     var converted8bitBech32 = _convertBits(bech32.data, 5, 8);
     var hexAddress = HEX.encode(converted8bitBech32);
-
     return hexAddress;
   }
 

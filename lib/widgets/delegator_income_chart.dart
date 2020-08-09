@@ -145,7 +145,7 @@ class _DelegatorIncomeChartState extends State<DelegatorIncomeChart> {
       minX: incomeInfo[0].timestamp,
       maxX: incomeInfo.last.timestamp,
       minY: 0,
-      maxY: (incomeInfo.last.delegations * 1.15),
+      maxY: (incomeInfo.last.delegations * 3),
       lineBarsData: measurementsData(incomeInfo),
     );
   }

@@ -147,7 +147,7 @@ class _DelegatorDelegationChartState extends State<DelegatorDelegationChart> {
       minX: delegatorDelegationList[0].timestamp,
       maxX: delegatorDelegationList.last.timestamp,
       minY: 0,
-      maxY: (delegatorDelegationList.last.delegations * 2),
+      maxY: (delegatorDelegationList.last.delegations * 3),
       lineBarsData: measurementsData(delegatorDelegationList),
     );
   }

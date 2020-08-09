@@ -69,7 +69,7 @@ class KiraFooter extends StatelessWidget {
                   child: FlatButton(
                     onPressed: () => Navigator.pushNamed(context, '/'),
                     child: Image(
-                      image: AssetImage('ido_logotwo.PNG'),
+                      image: AssetImage('ido_logotwo.png'),
                       height: 30,
                     ),
                   ),
