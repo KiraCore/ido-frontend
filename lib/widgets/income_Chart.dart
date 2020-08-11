@@ -59,83 +59,132 @@ class _IncomeChartState extends State<IncomeChart> {
 
   LineChartData mainData() {
     return LineChartData(
-      gridData: FlGridData(
-        show: false,
-        drawVerticalLine: false,
+       gridData: FlGridData(
+        show: true,
+        drawVerticalLine: true,
         getDrawingHorizontalLine: (value) {
           return FlLine(
             color: const Color(0xff37434d),
-            strokeWidth: 1,
+            strokeWidth: 0.5,
           );
         },
         getDrawingVerticalLine: (value) {
           return FlLine(
-            color: const Color(0xff37434d),
+            color: Colors.transparent,
             strokeWidth: 1,
           );
         },
       ),
       titlesData: FlTitlesData(
-        show: false,
+        show: true,
         bottomTitles: SideTitles(
           showTitles: false,
-          reservedSize: 0, //22
-          textStyle: const TextStyle(color: Color(0xff68737d), fontWeight: FontWeight.bold, fontSize: 16),
+          reservedSize: 22,
+          textStyle: const TextStyle(color: Color(0xff68737d), fontSize: 10),
           getTitles: (value) {
-            //var _r = DateTime.fromMillisecondsSinceEpoch(value.toInt() * 1000).toString();
-
             /*
             switch (value.toInt()) {
+              case 0:
+                return 'Jan';
               case 2:
-                return 'MAR';
+                return 'Mar';
               case 5:
-                return 'JUN';
-              case 8:
-                return 'SEP';
-          
+                return 'Jun';
+              case 7:
+                return 'Aug';
+              case 9:
+                return 'Oct';
             }
             */
             return '';
           },
-          margin: 0, //8
+          margin: 8,
         ),
         leftTitles: SideTitles(
-          showTitles: false,
+          showTitles: true,
           textStyle: const TextStyle(
-            color: Color(0xff67727d),
-            fontSize: 15,
+            color: Color(0xff7e9195),
+            fontSize: 10,
           ),
           getTitles: (value) {
             switch (value.toInt()) {
               case 0:
                 return '0';
-              case 1:
-                return '1';
-              case 2:
+              case 25:
                 return '50';
-              case 3:
+              case 50:
+                return '50';
+              case 100:
                 return '100';
-              case 4:
+              case 250:
                 return '250';
-              case 5:
+              case 500:
                 return '500';
-              case 6:
-                return '1000';
-              case 7:
-                return '2500';
-              case 8:
-                return '5000';
-              case 9:
-                return '10,000';
-              case 10:
-                return '50,000';
-              case 11:
-                return '100,000';
+              case 750:
+                return '750';
+              case 1000:
+                return '1k';
+              case 2500:
+                return '2.5k';
+              case 5000:
+                return '5k';
+              case 10000:
+                return '10k';
+              case 25000:
+                return '25k';
+              case 50000:
+                return '50k';
+              case 75000:
+                return '75k';
+              case 100000:
+                return '100k';
+              case 250000:
+                return '250k';
+              case 500000:
+                return '500k';
+              case 750000:
+                return '750k';
+              case 1000000:
+                return '1M';
+              case 2500000:
+                return '2.5M';
+              case 5000000:
+                return '5M';
+              case 7500000:
+                return '7.5M';
+              case 10000000:
+                return '10M';
+              case 25000000:
+                return '25M';
+              case 50000000:
+                return '50M';
+              case 75000000:
+                return '75M';
+              case 100000000:
+                return '100M';
+              case 200000000:
+                return '200M';
+              case 300000000:
+                return '300M';
+              case 400000000:
+                return '400M';
+              case 500000000:
+                return '500M';
+              case 750000000:
+                return '500M';
+              case 1000000000:
+                return '1B';
+              case 5000000000:
+                return '5B';
+              case 10000000000:
+                return '10B';
+              case 50000000000:
+                return '50B';
             }
             return '';
           },
-          reservedSize: 0, //25
-          margin: 0,
+          reservedSize: 30,
+          margin: 12,
         ),
       ),
       borderData: FlBorderData(show: false, border: Border.all(color: const Color(0xff37434d), width: 1)),
@@ -159,7 +208,7 @@ class _IncomeChartState extends State<IncomeChart> {
       isCurved: true,
       colors: gradientColors,
       barWidth: 5,
-      isStrokeCapRound: true,
+      isStrokeCapRound: true, // Show values of the spots on the graph
       dotData: FlDotData(
         show: false,
       ),

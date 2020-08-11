@@ -37,36 +37,38 @@ class IdoChart extends StatelessWidget {
           ),
         ),
       ]),
-      body: TabBarView(
-        physics: NeverScrollableScrollPhysics(),
-        controller: _tabChartController,
-        children: [
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-
-                IdoDelegationChart()
-              ],
+      body: Container(
+        color: Colors.white,
+        child: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
+          controller: _tabChartController,
+          children: [
+            Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  IdoDelegationChart()
+                ],
+              ),
             ),
-          ),
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                IncomeChart()
-              ],
+            Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  IncomeChart()
+                ],
+              ),
             ),
-          ),
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                MiningChart()
-              ],
+            Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  MiningChart()
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

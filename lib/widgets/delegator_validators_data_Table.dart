@@ -3,17 +3,17 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
-class DelegatorValidatorsTable extends StatefulWidget {
+class DelegatorValidatorDataTable extends StatefulWidget {
   List tableInfo = [];
 
-  DelegatorValidatorsTable(this.tableInfo);
+  DelegatorValidatorDataTable(this.tableInfo);
 
-  DelegatorValidatorsTableState createState() {
-    return new DelegatorValidatorsTableState();
+  DelegatorValidatorDataTableState createState() {
+    return new DelegatorValidatorDataTableState();
   }
 }
 
-class DelegatorValidatorsTableState extends State<DelegatorValidatorsTable> {
+class DelegatorValidatorDataTableState extends State<DelegatorValidatorDataTable> {
   @override
   Widget build(BuildContext context) {
     return DataTable(

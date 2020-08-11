@@ -51,9 +51,10 @@ class _KiraScreenState extends State<KiraScreen> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    getTokenInformation();
     _loading = true;
     getKiraInfomation();
-    getTokenInformation();
+
     super.initState();
     _tabChartController = TabController(vsync: this, length: 3);
   }
@@ -80,7 +81,7 @@ class _KiraScreenState extends State<KiraScreen> with TickerProviderStateMixin {
                         HeadingBanner(),
                         SliverFluidGrid(
                           fluid: true,
-                          spacing: 30,
+                          spacing: 50,
                           children: [
                             FluidCell.withFixedHeight(size: context.fluid(9, xs: 12, s: 12, m: 9, l: 9, xl: 9), height: 320, child: IdoChart(tabChartController: _tabChartController)),
                             if (context.breakpoint.isLargerThanS) FluidCell.fit(size: context.fluid(3, xs: 3, s: 3, m: 3, l: 3, xl: 3), child: SideTokensPanel(tickerInfo: tickerInfo)),

@@ -1,6 +1,6 @@
 import 'package:IDO_Kira/models/delegator_validator_table_model.dart';
+import 'package:IDO_Kira/widgets/delegator_validators_data_Table.dart';
 import 'package:flutter/material.dart';
-import 'delegator_validators_table.dart';
 
 class DelegatorValidatorTable extends StatefulWidget {
   final List<DelegatorValidatorTableModel> tableInfo;
@@ -24,7 +24,7 @@ class _DelegatorValidatorTableState extends State<DelegatorValidatorTable> {
         children: [
           Center(
             child: Container(
-              child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: DelegatorValidatorsTable(widget.tableInfo)),
+              child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: DelegatorValidatorDataTable(widget.tableInfo)),
             ),
           )
         ],

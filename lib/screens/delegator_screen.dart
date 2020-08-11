@@ -7,7 +7,7 @@ import 'package:IDO_Kira/widgets/custom_card.dart';
 import 'package:IDO_Kira/widgets/delegator_delegation_chart.dart';
 import 'package:IDO_Kira/widgets/delegator_income_chart.dart';
 import 'package:IDO_Kira/widgets/delegator_mining_chart.dart';
-import 'package:IDO_Kira/widgets/delegator_validator_widget_table%20copy.dart';
+import 'package:IDO_Kira/widgets/delegator_validator_widget_table.dart';
 import 'package:IDO_Kira/widgets/heading_banner.dart';
 import 'package:IDO_Kira/widgets/hidden_card.dart';
 import 'package:IDO_Kira/widgets/kira_footer.dart';
@@ -71,6 +71,7 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
         body: _loading
             ? Center(child: CircularProgressIndicator())
             : _invalid
@@ -134,9 +135,9 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
                                         ],
                                       )
                                     ]))),
-                                FluidCell.fit(size: context.fluid(12, xs: 12, s: 12, m: 12, l: 6, xl: 6), child: buildCharts()),
+                                FluidCell.fit(size: context.fluid(12, xs: 12, s: 12, m: 12, l: 5, xl: 5), child: buildCharts()),
                                 FluidCell.withFixedHeight(
-                                  size: context.fluid(12, xs: 12, s: 12, m: 12, l: 6, xl: 6),
+                                  size: context.fluid(12, xs: 12, s: 12, m: 12, l: 7, xl: 7),
                                   height: 250,
                                   child: buildTabBar(),
                                 ),
@@ -161,7 +162,7 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
 
   Scaffold buildTabBar() {
     return Scaffold(
-      drawerScrimColor: Colors.white,
+      drawerScrimColor: Colors.grey,
       appBar: TabBar(labelColor: Colors.black, indicatorColor: Colors.deepPurple, controller: _tabChartController, tabs: [
         Tab(
           child: Text(
