@@ -61,7 +61,6 @@ class _DelegatorScreenState extends State<DelegatorScreen> with TickerProviderSt
         _loading = false;
         _invalid = true;
       });
-      //statusAlertScreen();
       print('getDelegatorInfo: Failed to Retrieve Delegator Information : Exception: ' + e);
     }
   }

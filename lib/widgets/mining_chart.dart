@@ -16,9 +16,11 @@ class _MiningChartState extends State<MiningChart> {
     ChartService minerIdoChart = ChartService();
     await minerIdoChart.getMinerChart();
     miningList = minerIdoChart.chartIdoMining;
-    setState(() {
-      _loading = false;
-    });
+    if (this.mounted) {
+      setState(() {
+        _loading = false;
+      });
+    }
   }
 
   List<Color> gradientColors = [

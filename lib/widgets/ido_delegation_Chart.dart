@@ -16,9 +16,11 @@ class _IdoDelegationChartState extends State<IdoDelegationChart> {
     ChartService idoDelegationChart = ChartService();
     await idoDelegationChart.getIdoDelegationChart();
     idoDelegationList = idoDelegationChart.chartIdoDelegation;
-    setState(() {
-      _loading = false;
-    });
+    if (this.mounted) {
+      setState(() {
+        _loading = false;
+      });
+    }
   }
 
   List<Color> gradientColors = [

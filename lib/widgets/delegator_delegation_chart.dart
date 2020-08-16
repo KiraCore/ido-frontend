@@ -20,9 +20,11 @@ class _DelegatorDelegationChartState extends State<DelegatorDelegationChart> {
     ChartService delegationChart = ChartService();
     await delegationChart.getDelegatorDelegationChart(address: widget.address);
     delegatorDelegationList = delegationChart.chartDelegatorDelegation;
-    setState(() {
-      _loading = false;
-    });
+    if (this.mounted) {
+      setState(() {
+        _loading = false;
+      });
+    }
   }
 
   List<Color> gradientColors = [

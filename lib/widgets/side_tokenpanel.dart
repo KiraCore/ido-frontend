@@ -21,7 +21,7 @@ class _SideTokensPanelState extends State<SideTokensPanel> {
         child: Column(
       children: [
         Text(
-          'Token prices to mine KEK',
+          'Token prices to mine KEX',
           style: TextStyle(fontSize: 18, color: Colors.black),
         ),
         SizedBox(

@@ -19,9 +19,11 @@ class _DelegatorMiningChartState extends State<DelegatorMiningChart> {
     ChartService minerIdoChart = ChartService();
     await minerIdoChart.getDelegatorMinerChart(address: widget.address);
     miningList = minerIdoChart.chartDelegatorMining;
-    setState(() {
-      _loading = false;
-    });
+    if (this.mounted) {
+      setState(() {
+        _loading = false;
+      });
+    }
   }
 
   List<Color> gradientColors = [

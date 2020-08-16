@@ -9,11 +9,13 @@ import 'package:IDO_Kira/widgets/custom_card.dart';
 import 'package:IDO_Kira/widgets/heading_banner.dart';
 import 'package:IDO_Kira/widgets/ido_chart.dart';
 import 'package:IDO_Kira/widgets/kira_footer.dart';
+import 'package:IDO_Kira/widgets/loading_screen.dart';
 import 'package:IDO_Kira/widgets/side_tokenpanel.dart';
 import 'package:IDO_Kira/widgets/validator_widget_table.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:fluid_layout/fluid_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class KiraScreen extends StatefulWidget {
   @override
@@ -37,7 +39,7 @@ class _KiraScreenState extends State<KiraScreen> with TickerProviderStateMixin {
     ChartService chartAPI = ChartService();
     await chartAPI.getValidatorTable();
     validatorInfo = chartAPI.validatorTable;
-
+    await new Future.delayed(const Duration(seconds: 3));
     setState(() {
       _loading = false;
     });
@@ -67,7 +69,7 @@ class _KiraScreenState extends State<KiraScreen> with TickerProviderStateMixin {
     return Scaffold(
         backgroundColor: Colors.white,
         body: _loading
-            ? Center(child: CircularProgressIndicator())
+            ? LoadingScreen()
             : Container(
                 height: size.height,
                 width: size.width,
@@ -81,7 +83,7 @@ class _KiraScreenState extends State<KiraScreen> with TickerProviderStateMixin {
                         HeadingBanner(),
                         SliverFluidGrid(
                           fluid: true,
-                          spacing: 50,
+                          spacing: 30,
                           children: [
                             FluidCell.withFixedHeight(size: context.fluid(9, xs: 12, s: 12, m: 9, l: 9, xl: 9), height: 320, child: IdoChart(tabChartController: _tabChartController)),
                             if (context.breakpoint.isLargerThanS) FluidCell.fit(size: context.fluid(3, xs: 3, s: 3, m: 3, l: 3, xl: 3), child: SideTokensPanel(tickerInfo: tickerInfo)),
@@ -103,7 +105,6 @@ class _KiraScreenState extends State<KiraScreen> with TickerProviderStateMixin {
                         SliverToBoxAdapter(
                           child: KiraFooter(),
                         ),
-
                         // Only Sliver widgets can exist here. This is an array of such widgets
                       ],
                     ),

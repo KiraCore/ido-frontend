@@ -16,9 +16,11 @@ class _IncomeChartState extends State<IncomeChart> {
     ChartService idoIncomeChart = ChartService();
     await idoIncomeChart.getIncomeChart();
     incomeInfo = idoIncomeChart.chartIdoIncome;
-    setState(() {
-      _loading = false;
-    });
+    if (this.mounted) {
+      setState(() {
+        _loading = false;
+      }); 
+    }
   }
 
   List<Color> gradientColors = [

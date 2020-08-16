@@ -14,7 +14,7 @@ class FluroRouter {
   static Handler _delegatorHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) => DelegatorScreen(address: params['address'][0]));
 
   //static Handler _delegatorHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) => DelegatorScreen();)
-
+  
   // Set up the routes, handler and it's transition
   static void setupRouter() {
     router.define('/', handler: _kiraHandler, transitionType: TransitionType.fadeIn);

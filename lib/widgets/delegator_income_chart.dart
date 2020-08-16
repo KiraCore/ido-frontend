@@ -19,9 +19,11 @@ class _DelegatorIncomeChartState extends State<DelegatorIncomeChart> {
     ChartService delegatorIncomeChart = ChartService();
     await delegatorIncomeChart.getDelegatorIncomeChart(address: widget.address);
     incomeInfo = delegatorIncomeChart.chartDelegatorIncome;
-    setState(() {
-      _loading = false;
-    });
+    if (this.mounted) {
+      setState(() {
+        _loading = false;
+      });
+    }
   }
 
   List<Color> gradientColors = [
